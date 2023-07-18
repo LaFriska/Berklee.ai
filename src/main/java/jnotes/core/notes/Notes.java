@@ -1,5 +1,12 @@
 package jnotes.core.notes;
 
+import jnotes.debug.MissingJavadoc;
+
+/**
+ *The Notes class contains static Note instantiations of every note spelling possible.
+ *For the sake of convenience, it is adviced to directly use a method from this class instead of creating a note
+ *instantiation.
+ * **/
 public class Notes {
 
     public static final Note C = new Note(NoteBase.C);

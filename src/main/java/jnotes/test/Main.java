@@ -1,6 +1,5 @@
 package jnotes.test;
 
-import jnotes.core.notes.Notes;
 import jnotes.test.testutil.Test;
 
 public class Main {
@@ -9,7 +8,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        NotesTest.enharmonicSuite();
+        NotesTest.comparison();
 
         test.run();
     }

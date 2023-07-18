@@ -1,5 +1,8 @@
 package jnotes.core.notes;
 
+import jnotes.debug.MissingJavadoc;
+
+@MissingJavadoc
 public enum NoteBase{
 
     C(1, 1),
