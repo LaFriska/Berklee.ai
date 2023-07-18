@@ -23,4 +23,12 @@ public class Assertion<T> implements Runnable{
         return hasPassed;
     }
 
+    public String getExpectedStr() {
+        return String.valueOf(expected);
+    }
+
+    public String getActualStr() {
+        return String.valueOf(actual);
+    }
+
 }

@@ -2,11 +2,17 @@ package jnotes.test;
 
 import jnotes.core.notes.Notes;
 import jnotes.test.testutil.Assertion;
+import jnotes.test.testutil.Suite;
+import jnotes.test.testutil.Test;
 
 public class Main {
+
+    public static final Test test = new Test();
+
     public static void main(String[] args) {
-        Assertion<String> assertion = new Assertion<>("Hello", "Hello");
-        assertion.run();
-        System.out.println(assertion.getResults());
+
+        NotesTest.enharmonicSuite();
+
+        test.run();
     }
 }

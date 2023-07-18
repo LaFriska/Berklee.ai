@@ -1,5 +1,7 @@
 package jnotes.core.notes;
 
+import org.jetbrains.annotations.NotNull;
+
 public class Note {
 
     private final NoteBase noteBase;
@@ -7,7 +9,7 @@ public class Note {
 
     private final int value;
 
-    public Note(NoteBase noteBase, Alteration alteration){ //TODO add nonnull
+    public Note(@NotNull NoteBase noteBase, Alteration alteration){ //TODO add nonnull
         this.noteBase = noteBase;
         if(alteration == null) this.alteration = Alteration.NATURAL;
         else this.alteration = alteration;
