@@ -9,11 +9,15 @@ public class Note {
 
     private final int value;
 
-    public Note(@NotNull NoteBase noteBase, Alteration alteration){ //TODO add nonnull
+    public Note(@NotNull NoteBase noteBase, Alteration alteration){
+        int value;
         this.noteBase = noteBase;
         if(alteration == null) this.alteration = Alteration.NATURAL;
         else this.alteration = alteration;
-        this.value = noteBase.value + this.alteration.value;
+        //Modulo 12 to get note values to stay in GF(12)
+        value = (noteBase.value + this.alteration.value) % 12;
+        if(value <= 0) value = 12 + value;
+        this.value = value;
     }
 
     public Note(NoteBase noteBase){

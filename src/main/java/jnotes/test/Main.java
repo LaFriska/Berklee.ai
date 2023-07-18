@@ -1,8 +1,6 @@
 package jnotes.test;
 
 import jnotes.core.notes.Notes;
-import jnotes.test.testutil.Assertion;
-import jnotes.test.testutil.Suite;
 import jnotes.test.testutil.Test;
 
 public class Main {

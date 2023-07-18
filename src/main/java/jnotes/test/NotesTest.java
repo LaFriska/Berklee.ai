@@ -19,7 +19,8 @@ public class NotesTest {
                         new Assertion<>(true, Notes.E_FLAT.equalsEnharmonically(Notes.D_SHARP)),
                         new Assertion<>(true, Notes.A_FLAT.equalsEnharmonically(Notes.G_SHARP)),
                         new Assertion<>(false, Notes.C_FLAT.equalsEnharmonically(Notes.B_SHARP)),
-                        new Assertion<>(false, Notes.B_FLAT.equalsEnharmonically(Notes.A_SHARP)),
+
+                        new Assertion<>(true, Notes.B_FLAT.equalsEnharmonically(Notes.A_SHARP)),
                         new Assertion<>(false, Notes.F_FLAT.equalsEnharmonically(Notes.F_SHARP)),
                         new Assertion<>(true, Notes.D_SHARP.equalsEnharmonically(Notes.D_SHARP)),
                         new Assertion<>(true, Notes.F_SHARP.equalsEnharmonically(Notes.G_FLAT)),
@@ -29,8 +30,12 @@ public class NotesTest {
                         new Assertion<>(true, Notes.A.equalsEnharmonically(Notes.A)),
                         new Assertion<>(false, Notes.B.equalsEnharmonically(Notes.D)),
                         new Assertion<>(true, Notes.C_FLAT.equalsEnharmonically(Notes.A_DOUBLE_SHARP)),
+
                         new Assertion<>(true, Notes.E_SHARP.equalsEnharmonically(Notes.G_DOUBLE_FLAT)),
-                        new Assertion<>(true, Notes.F.equalsEnharmonically(Notes.E_SHARP))
+                        new Assertion<>(true, Notes.F.equalsEnharmonically(Notes.E_SHARP)),
+                        new Assertion<>(true, Notes.B_DOUBLE_SHARP.equalsEnharmonically(Notes.C_SHARP)),
+                        new Assertion<>(true, Notes.C_DOUBLE_FLAT.equalsEnharmonically(Notes.A_SHARP)),
+                        new Assertion<>(true, Notes.C_FLAT.equalsEnharmonically(Notes.B))
                 )
         );
     }
