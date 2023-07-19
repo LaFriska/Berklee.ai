@@ -70,4 +70,12 @@ public class NotesTest {
         );
     }
 
+    protected static void pitch(){
+        Main.test.addSuite(
+                new Suite("Notes.Pitch.OctaveValue").addAssertions(
+
+                )
+        );
+    }
+
 }

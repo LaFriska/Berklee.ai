@@ -1,6 +1,7 @@
 package jnotes.core.notes;
 
 import jnotes.debug.MissingJavadoc;
+import jnotes.exceptions.NoteOctaveException;
 import org.jetbrains.annotations.NotNull;
 
 public class Note {
@@ -9,6 +10,7 @@ public class Note {
     private final Alteration alteration;
 
     private final int value;
+    private int octaveValue = -1; //Abstract octave can be set to -1
 
     /**
      * This object creates an abstraction for a musical note.
@@ -84,10 +86,59 @@ public class Note {
                 && note.getAlteration() == this.getAlteration();
     }
 
+    public Note abstractOctave(){
+        this.octaveValue = -1;
+        return this;
+    }
+
+    /**
+     * Defines the octave for this note. Upon instantiation, the octave value is by default
+     * set to -1, meaning that is abstract. This method however, sets the note to a specific octave
+     * and thus, a specific pitch. To re-abstract the octave value, call {@link Note#abstractOctave()}.
+     * Calling this method enables the {@link Note#getHertz()} method to return the Hertz pitch value of
+     * the note.
+     * <p>
+     * @param octaveValue To set an octave, enter an integer value as such in the standard note notation. For example, if
+     * this note is C, entering 3 into this method will make it a C3. Entering an integer outside of the musical pitch range will cause an exception.
+     * **/
+    public Note setOctave(int octaveValue){
+
+        int lowBound;
+        int highBound;
+
+        switch (this.getValue()){ //Idiot-proofing
+            case 10 | 11 | 12:
+                lowBound = 0;
+                highBound = 7;
+            case 1:
+                lowBound = 1;
+                highBound = 8;
+            default:
+                lowBound = 1;
+                highBound = 7;
+        }
+
+        if(octaveValue < lowBound) throw new NoteOctaveException("Octave value for this note must be atleast " + lowBound + ".");
+        if(octaveValue > highBound) throw new NoteOctaveException("Octave value for this note cannot exceed " + highBound + ".");
+
+        this.octaveValue = octaveValue;
+        return this;
+    }
+
+    /**
+     * Returns the octave value, when undefined, it is abstract and thus would return -1.
+     * For a full explanation of the octave value, see {@link Note#setOctave}.
+     * **/
+    public int getOctaveValue() {
+        return octaveValue;
+    }
+
     @MissingJavadoc
-    public int getHertz(){
-        //TODO
-        return -1;
+    public float getHertz(){
+
+        if(octaveValue == -1) throw new NoteOctaveException("Cannot return Hertz value of a note with an abstract octave number.");
+
+        return (float) (16.351597831287414 * Math.pow(2, (float) (octaveValue * 12 + (getValue() - 1)) / 12));
     }
 }
 
