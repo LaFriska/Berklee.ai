@@ -1,6 +1,6 @@
 package jnotes.core.notes;
 
-import jnotes.debug.MissingJavadoc;
+import jnotes.core.util.NoteUtils;
 import jnotes.exceptions.NoteOctaveException;
 import org.jetbrains.annotations.NotNull;
 
@@ -111,28 +111,7 @@ public class Note {
     public Note setOctave(int octaveValue){
 
         if(immutable) throw new NoteOctaveException("This note is immutable. Call the Note#createMutableClone() method.");
-
-        int lowBound;
-        int highBound;
-
-        switch (this.getValue()) { //Idiot-proofing
-            case 10, 11, 12 -> {
-                lowBound = 0;
-                highBound = 7;
-            }
-            case 1 -> {
-                lowBound = 1;
-                highBound = 8;
-            }
-            default -> {
-                lowBound = 1;
-                highBound = 7;
-            }
-        }
-
-        if(octaveValue < lowBound) throw new NoteOctaveException("Octave value for this note must be atleast " + lowBound + ".");
-        if(octaveValue > highBound) throw new NoteOctaveException("Octave value for this note cannot exceed " + highBound + ".");
-
+        NoteUtils.checkOctaveRange(octaveValue, this.value);
         this.octaveValue = octaveValue;
         return this;
     }
@@ -151,6 +130,13 @@ public class Note {
      * **/
     public int getOctaveValue() {
         return octaveValue;
+    }
+
+    /**
+     * Returns whether the octave is abstract, i.e. if the octave value had not yet been defined.
+     * **/
+    public boolean isOctaveAbstract(){
+        return octaveValue == -1;
     }
 
     /**
