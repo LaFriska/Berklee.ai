@@ -12,7 +12,7 @@ public class Note {
     private final int value;
     private int octaveValue = -1; //Abstract octave can be set to -1
 
-    private boolean immutable;
+    private final boolean immutable;
 
     protected Note(@NotNull NoteBase noteBase, Alteration alteration, boolean immutable){
         int value;
@@ -153,11 +153,16 @@ public class Note {
         return octaveValue;
     }
 
-    @MissingJavadoc
+    /**
+     * Returns the specific pitch in Hertz of the note. An exception will be thrown if the octave is not defined;
+     * thus, the {@link Note#setOctave} method must be called before calling this method.
+     * <p>
+     * This method uses the octave value and note value of the note to calculate the number of semitones above
+     * the theoretical C0 note, which is represented by a Hertz constant of approximately 16.35. This constant is used
+     * in an exponential equation where ever 12 semitones (i.e. an octave) the Hertz value doubles.
+     * **/
     public float getHertz(){
-
         if(octaveValue == -1) throw new NoteOctaveException("Cannot return Hertz value of a note with an abstract octave number.");
-
         return (float) (16.351597831287414 * Math.pow(2, (float) (octaveValue * 12 + (getValue() - 1)) / 12));
     }
 }
