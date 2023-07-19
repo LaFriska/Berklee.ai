@@ -86,5 +86,15 @@ public class NotesTest {
                         new Assertion<>(28, Math.round(Notes.B_DOUBLE_FLAT.createMutableClone().setOctave(0).getHertz()))
                 )
         );
+
+        Main.test.addSuite(
+                new Suite("Notes.Pitch.Spelling").addAssertions(
+                        new Assertion<>("C♯", Notes.C_SHARP.getSpelling()),
+                        new Assertion<>("D\uD834\uDD2B", Notes.D_DOUBLE_FLAT.getSpelling()),
+                        new Assertion<>("E♭", Notes.E_FLAT.getSpelling()),
+                        new Assertion<>("F\uD834\uDD2A", Notes.F_DOUBLE_SHARP.getSpelling()),
+                        new Assertion<>("G", Notes.G.getSpelling())
+                )
+        );
     }
 }

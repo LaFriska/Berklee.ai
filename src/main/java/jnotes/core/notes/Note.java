@@ -165,5 +165,15 @@ public class Note {
         if(octaveValue == -1) throw new NoteOctaveException("Cannot return Hertz value of a note with an abstract octave number.");
         return (float) (16.351597831287414 * Math.pow(2, (float) (octaveValue * 12 + (getValue() - 1)) / 12));
     }
+
+    /**
+     * Returns a string with the correct chord spelling.
+     * **/
+    public String getSpelling(){
+        StringBuilder spelling = new StringBuilder();
+        spelling.append(noteBase.toString());
+        if(alteration != Alteration.NATURAL) spelling.append(alteration.symbol);
+        return spelling.toString();
+    }
 }
 

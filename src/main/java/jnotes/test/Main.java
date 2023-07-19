@@ -1,7 +1,9 @@
 package jnotes.test;
 
-import jnotes.core.notes.Notes;
+import jnotes.core.notes.Alteration;
 import jnotes.test.testutil.Test;
+
+import java.util.AbstractList;
 
 public class Main {
 
@@ -11,10 +13,6 @@ public class Main {
 
         runTest();
 
-    }
-
-    private static float getHerz(int x){
-        return (float) (16.351597831287414 * Math.pow(2, (float) x / 12));
     }
 
     private static void runTest(){
