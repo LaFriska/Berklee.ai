@@ -12,14 +12,9 @@ public class Note {
     private final int value;
     private int octaveValue = -1; //Abstract octave can be set to -1
 
-    /**
-     * This object creates an abstraction for a musical note.
-     * Data such as the spelling and pitch value are to be stored in this object.
-     *
-     * @param noteBase Base note without any accidentals.
-     * @param alteration Alterations such as a sharp, double sharp or a flat to the base note.
-     * **/
-    public Note(@NotNull NoteBase noteBase, Alteration alteration){
+    private boolean immutable;
+
+    protected Note(@NotNull NoteBase noteBase, Alteration alteration, boolean immutable){
         int value;
         this.noteBase = noteBase;
         if(alteration == null) this.alteration = Alteration.NATURAL;
@@ -28,6 +23,18 @@ public class Note {
         value = (noteBase.value + this.alteration.value) % 12;
         if(value <= 0) value = 12 + value;
         this.value = value;
+        this.immutable = immutable;
+    }
+
+    /**
+     * This object creates an abstraction for a musical note.
+     * Data such as the spelling and pitch value are to be stored in this object.
+     *
+     * @param noteBase Base note without any accidentals.
+     * @param alteration Alterations such as a sharp, double sharp or a flat to the base note.
+     * **/
+    public Note(@NotNull NoteBase noteBase, Alteration alteration){
+        this(noteBase, alteration, false);
     }
 
     /**
@@ -67,7 +74,7 @@ public class Note {
      * Returns true if the note compared is enharmonically the same as the note this method is called from.
      * This means that as long as the pitch value of the notes are equal
      * (assuming that they are in the same octave) then this method returns true. This method simply
-     * checks whether or not the note values are equal. For a description of note values, see {@link Note#getValue}.
+     * checks whether the note values are equal. For a description of note values, see {@link Note#getValue}.
      * For a method that returns true only if the notes are spelled the same, see the {@link Note#equals} method.
      * */
     public boolean equalsEnharmonically(Note note){
@@ -103,19 +110,24 @@ public class Note {
      * **/
     public Note setOctave(int octaveValue){
 
+        if(immutable) throw new NoteOctaveException("This note is immutable. Call the Note#createMutableClone() method.");
+
         int lowBound;
         int highBound;
 
-        switch (this.getValue()){ //Idiot-proofing
-            case 10 | 11 | 12:
+        switch (this.getValue()) { //Idiot-proofing
+            case 10, 11, 12 -> {
                 lowBound = 0;
                 highBound = 7;
-            case 1:
+            }
+            case 1 -> {
                 lowBound = 1;
                 highBound = 8;
-            default:
+            }
+            default -> {
                 lowBound = 1;
                 highBound = 7;
+            }
         }
 
         if(octaveValue < lowBound) throw new NoteOctaveException("Octave value for this note must be atleast " + lowBound + ".");
@@ -123,6 +135,14 @@ public class Note {
 
         this.octaveValue = octaveValue;
         return this;
+    }
+
+    /**
+     * Creates a clone of a note that is immutable, so that certain parameters in the note can
+     * be changed.
+     * **/
+    public Note createMutableClone(){
+        return new Note(noteBase, alteration);
     }
 
     /**

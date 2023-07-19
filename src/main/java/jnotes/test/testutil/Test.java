@@ -30,7 +30,7 @@ public class Test extends Failable implements Runnable{
                 failLog.append("\n").append(suite.getFailLog());
             }
         }
-        failLog.insert(0, "------------------------------------------").append("------------------------------------------");
+        failLog.insert(0, "--------------------FAIL LOG--------------------").append("--------------------FAIL LOG--------------------");
         if(isFailed()){
             System.err.println("\nTest failed: " + failedNum + "/" + suites.size() + " test suites did not succeed. Below is the fail log:\n");
             System.err.println(failLog);

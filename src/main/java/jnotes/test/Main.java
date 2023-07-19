@@ -1,5 +1,6 @@
 package jnotes.test;
 
+import jnotes.core.notes.Notes;
 import jnotes.test.testutil.Test;
 
 public class Main {
@@ -8,9 +9,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        System.out.println(getHerz(9));
-
-        //runTest();
+        runTest();
 
     }
 
@@ -20,7 +19,7 @@ public class Main {
 
     private static void runTest(){
         NotesTest.comparison();
-
+        NotesTest.pitch();
         test.run();
     }
 }

@@ -73,9 +73,18 @@ public class NotesTest {
     protected static void pitch(){
         Main.test.addSuite(
                 new Suite("Notes.Pitch.OctaveValue").addAssertions(
+                        new Assertion<>(440, Math.round(Notes.A.createMutableClone().setOctave(4).getHertz())),
+                        new Assertion<>(33, Math.round(Notes.C.createMutableClone().setOctave(1).getHertz())),
+                        new Assertion<>(58, Math.round(Notes.A_SHARP.createMutableClone().setOctave(1).getHertz())),
+                        new Assertion<>(3951, Math.round(Notes.B.createMutableClone().setOctave(7).getHertz())),
+                        new Assertion<>(3520, Math.round(Notes.G_DOUBLE_SHARP.createMutableClone().setOctave(7).getHertz())),
+                        new Assertion<>(4186, Math.round(Notes.C.createMutableClone().setOctave(8).getHertz())),
+                        new Assertion<>(1760, Math.round(Notes.A.createMutableClone().setOctave(6).getHertz())),
+                        new Assertion<>(1245, Math.round(Notes.D_SHARP.createMutableClone().setOctave(6).getHertz())),
 
+                        new Assertion<>(29, Math.round(Notes.B_FLAT.createMutableClone().setOctave(0).getHertz())),
+                        new Assertion<>(28, Math.round(Notes.B_DOUBLE_FLAT.createMutableClone().setOctave(0).getHertz()))
                 )
         );
     }
-
 }
