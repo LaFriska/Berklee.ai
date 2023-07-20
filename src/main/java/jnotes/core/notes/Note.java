@@ -106,12 +106,11 @@ public class Note {
      * the note.
      * <p>
      * @param octaveValue To set an octave, enter an integer value as such in the standard note notation. For example, if
-     * this note is C, entering 3 into this method will make it a C3. Entering an integer outside of the musical pitch range will cause an exception.
+     * this note is C, entering 3 into this method will make it a C3. Entering an integer outside the musical pitch range will cause an exception.
      * **/
     public Note setOctave(int octaveValue){
-
-        if(immutable) throw new NoteOctaveException("This note is immutable. Call the Note#createMutableClone() method.");
         NoteUtils.checkOctaveRange(octaveValue, this.value);
+        if(immutable) return this.createMutableClone().setOctave(octaveValue);
         this.octaveValue = octaveValue;
         return this;
     }

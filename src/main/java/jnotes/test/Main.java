@@ -1,7 +1,11 @@
 package jnotes.test;
 
+import jnotes.core.intervals.Interval;
+import jnotes.core.intervals.IntervalQuality;
 import jnotes.core.notes.Alteration;
+import jnotes.core.notes.Note;
 import jnotes.core.notes.NoteBase;
+import jnotes.core.notes.Notes;
 import jnotes.core.util.NoteUtils;
 import jnotes.test.testutil.Test;
 
@@ -13,16 +17,14 @@ public class Main {
 
     public static void main(String[] args) {
 
-
-        System.out.println(NoteUtils.getBaseNoteNumber(2, 10, NoteBase.A));
-
-        //runTest();
+        runTest();
 
     }
 
     private static void runTest(){
         NotesTest.comparison();
         NotesTest.pitch();
+        IntervalsTest.values();
         test.run();
     }
 }

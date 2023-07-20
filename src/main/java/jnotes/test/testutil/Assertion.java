@@ -1,5 +1,7 @@
 package jnotes.test.testutil;
 
+import jnotes.exceptions.AssertionException;
+
 public class Assertion<T> implements Runnable{
 
     private final T expected;
@@ -8,6 +10,10 @@ public class Assertion<T> implements Runnable{
     private Boolean hasPassed = null;
 
     public Assertion(T expected, T actual){
+        if(expected.getClass() != actual.getClass())
+            throw new AssertionException("Generic types between expected and actual variables mismatched. " +
+                    "\nActual Class: " + actual.getClass().getName() +
+                    "\nExpected Class: " + expected.getClass().getName());
         this.expected = expected;
         this.actual = actual;
     }

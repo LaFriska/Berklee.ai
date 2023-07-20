@@ -7,16 +7,28 @@ import jnotes.exceptions.NoteOctaveException;
 @MissingJavadoc
 public class NoteUtils {
 
+    /**
+     * Returns the position of the note on the piano
+     * **/
     public static int getSemitonesNumber(int octaveValue, int noteValue){
         checkOctaveRange(octaveValue, noteValue);
         return 3 + ((octaveValue - 1) * 12) + noteValue;
     }
 
+    /**
+     * Returns the white note position of the base note on the piano
+     * **/
     public static int getBaseNoteNumber(int octaveValue, int noteValue, NoteBase noteBase){
         checkOctaveRange(octaveValue, noteValue);
         return 2 + ((octaveValue - 1) * 7) + noteBase.solfeggeValue;
     }
 
+    /**
+     * Ensures that the range of the octave is appropriate for the
+     * note value given. If otherwise, an exception will be thrown.
+     *
+     * @return Returns true when no exceptions are thrown.
+     * **/
     public static boolean checkOctaveRange(int octaveValue, int noteValue){
 
         int lowBound;
