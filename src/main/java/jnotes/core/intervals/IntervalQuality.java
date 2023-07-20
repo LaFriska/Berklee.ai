@@ -7,5 +7,15 @@ public enum IntervalQuality {
     MAJOR,
     MINOR,
     DIMINISHED,
-    AUGMENTED
+    AUGMENTED,
+    PERFECT,
+
+    //Theoretically possible intervals that is seldom used practically
+
+    DOUBLE_DIMINISHED,
+    DOUBLE_AUGMENTED,
+    TRIPLE_DIMINISHED,
+    TRIPLE_AUGMENTED,
+    QUADRUPLE_DIMINISHED,
+    QUADRUPLE_AUGMENTED,
 }

@@ -1,6 +1,5 @@
 package jnotes.core.notes;
 
-import jnotes.core.util.NoteUtils;
 import jnotes.exceptions.NoteOctaveException;
 import org.jetbrains.annotations.NotNull;
 
@@ -45,6 +44,54 @@ public class Note {
      * **/
     public Note(NoteBase noteBase){
         this(noteBase, Alteration.NATURAL);
+    }
+
+    /**
+     * Returns the position of the note on the piano
+     * **/
+    public static int getSemitonesNumber(int octaveValue, int noteValue){
+        checkOctaveRange(octaveValue, noteValue);
+        return 3 + ((octaveValue - 1) * 12) + noteValue;
+    }
+
+    /**
+     * Returns the white note position of the base note on the piano
+     * **/
+    public static int getBaseNoteNumber(int octaveValue, int noteValue, NoteBase noteBase){
+        checkOctaveRange(octaveValue, noteValue);
+        return 2 + ((octaveValue - 1) * 7) + noteBase.solfeggeValue;
+    }
+
+    /**
+     * Ensures that the range of the octave is appropriate for the
+     * note value given. If otherwise, an exception will be thrown.
+     *
+     * @return Returns true when no exceptions are thrown.
+     * **/
+    public static boolean checkOctaveRange(int octaveValue, int noteValue){
+
+        int lowBound;
+        int highBound;
+
+        switch (noteValue) {
+            case 10, 11, 12 -> {
+                lowBound = 0;
+                highBound = 7;
+            }
+            case 1 -> {
+                lowBound = 1;
+                highBound = 8;
+            }
+            default -> {
+                lowBound = 1;
+                highBound = 7;
+            }
+        }
+
+        if(octaveValue < lowBound) throw new NoteOctaveException("Octave value for this note must be atleast " + lowBound + ".");
+        if(octaveValue > highBound) throw new NoteOctaveException("Octave value for this note cannot exceed " + highBound + ".");
+
+        return true;
     }
 
     /**
@@ -109,7 +156,7 @@ public class Note {
      * this note is C, entering 3 into this method will make it a C3. Entering an integer outside the musical pitch range will cause an exception.
      * **/
     public Note setOctave(int octaveValue){
-        NoteUtils.checkOctaveRange(octaveValue, this.value);
+        checkOctaveRange(octaveValue, this.value);
         if(immutable) return this.createMutableClone().setOctave(octaveValue);
         this.octaveValue = octaveValue;
         return this;

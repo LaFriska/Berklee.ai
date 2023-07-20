@@ -6,7 +6,6 @@ import jnotes.core.notes.Alteration;
 import jnotes.core.notes.Note;
 import jnotes.core.notes.NoteBase;
 import jnotes.core.notes.Notes;
-import jnotes.core.util.NoteUtils;
 import jnotes.test.testutil.Test;
 
 import java.util.AbstractList;
