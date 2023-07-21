@@ -1,5 +1,8 @@
 package jnotes.core.intervals;
 
+import jnotes.debug.MissingJavadoc;
+
+@MissingJavadoc
 public enum CommonIntervals {
 
     UNISON("Unison"),
