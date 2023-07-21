@@ -4,7 +4,6 @@ import jnotes.core.notes.Note;
 import jnotes.debug.MissingJavadoc;
 import jnotes.exceptions.IntervalException;
 
-@MissingJavadoc
 public class IntervalCalculator {
 
     private final Note lower;
