@@ -26,6 +26,7 @@ public class Test extends Failable implements Runnable{
             logSuite(suite, count);
             suite.run();
             if(suite.isFailed()){
+                failedNum++;
                 failed = true;
                 failLog.append("\n").append(suite.getFailLog());
             }

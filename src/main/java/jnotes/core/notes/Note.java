@@ -47,18 +47,22 @@ public class Note {
     }
 
     /**
-     * Returns the position of the note on the piano
+     * Returns the position of the note on the piano. Inputting a note without a defined octave
+     * value will cause an exception.
      * **/
-    public static int getSemitonesNumber(int octaveValue, int noteValue){
-        checkOctaveRange(octaveValue, noteValue);
-        return 3 + ((octaveValue - 1) * 12) + noteValue;
+    public int getSemitonesNumber(){
+        if(isOctaveAbstract()) throw new NoteOctaveException("Cannot get semitone number of a note without a defined octave number.");
+        checkOctaveRange(octaveValue, noteBase.value);
+        return 3 + ((octaveValue - 1) * 12) + (noteBase.value + alteration.value);
     }
 
     /**
-     * Returns the white note position of the base note on the piano
+     * Returns the white note position of the base note on the piano. Inputting a note without a defined octave
+     * value will cause an exception.
      * **/
-    public static int getBaseNoteNumber(int octaveValue, int noteValue, NoteBase noteBase){
-        checkOctaveRange(octaveValue, noteValue);
+    public int getBaseNoteNumber(){
+        if(isOctaveAbstract()) throw new NoteOctaveException("Cannot get base note number of a note without a defined octave number.");
+        checkOctaveRange(octaveValue, noteBase.value);
         return 2 + ((octaveValue - 1) * 7) + noteBase.solfeggeValue;
     }
 
@@ -68,13 +72,13 @@ public class Note {
      *
      * @return Returns true when no exceptions are thrown.
      * **/
-    public static boolean checkOctaveRange(int octaveValue, int noteValue){
+    public static boolean checkOctaveRange(int octaveValue, int noteBaseValue){
 
         int lowBound;
         int highBound;
 
-        switch (noteValue) {
-            case 10, 11, 12 -> {
+        switch (noteBaseValue) {
+            case 10, 12 -> {
                 lowBound = 0;
                 highBound = 7;
             }
@@ -156,7 +160,7 @@ public class Note {
      * this note is C, entering 3 into this method will make it a C3. Entering an integer outside the musical pitch range will cause an exception.
      * **/
     public Note setOctave(int octaveValue){
-        checkOctaveRange(octaveValue, this.value);
+        checkOctaveRange(octaveValue, noteBase.value);
         if(immutable) return this.createMutableClone().setOctave(octaveValue);
         this.octaveValue = octaveValue;
         return this;

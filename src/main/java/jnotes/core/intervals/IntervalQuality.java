@@ -4,18 +4,25 @@ import jnotes.debug.MissingJavadoc;
 
 @MissingJavadoc
 public enum IntervalQuality {
-    MAJOR,
-    MINOR,
-    DIMINISHED,
-    AUGMENTED,
-    PERFECT,
+    MAJOR("Major"),
+    MINOR("Minor"),
+    DIMINISHED("Diminished"),
+    AUGMENTED("Augmented"),
+    PERFECT("Perfect"),
 
     //Theoretically possible intervals that is seldom used practically
 
-    DOUBLE_DIMINISHED,
-    DOUBLE_AUGMENTED,
-    TRIPLE_DIMINISHED,
-    TRIPLE_AUGMENTED,
-    QUADRUPLE_DIMINISHED,
-    QUADRUPLE_AUGMENTED,
+    DOUBLE_DIMINISHED("Double Diminished"),
+    DOUBLE_AUGMENTED("Double Augmented"),
+    TRIPLE_DIMINISHED("Triple Diminished"),
+    TRIPLE_AUGMENTED("Triple Augmented"),
+    QUADRUPLE_DIMINISHED("Quadruple Diminished"),
+    QUADRUPLE_AUGMENTED("Quadruple Augmented");
+
+    public final String format;
+
+    IntervalQuality(String format){
+        this.format = format;
+    }
+
 }
