@@ -107,7 +107,7 @@ public class NotesTest {
                         new Assertion<>(4, Notes.D.setOctave(1).getBaseNoteLabel()),
                         new Assertion<>(8, Notes.A.setOctave(1).getBaseNoteLabel()),
                         new Assertion<>(9, Notes.B.setOctave(1).getBaseNoteLabel()),
-                        new Assertion<>(12, Notes.E.setOctave(1).getBaseNoteLabel()),
+                        new Assertion<>(12, Notes.E.setOctave(2).getBaseNoteLabel()),
                         new Assertion<>(43, Notes.A.setOctave(6).getBaseNoteLabel()),
                         new Assertion<>(34, Notes.F.setOctave(5).getBaseNoteLabel()),
                         new Assertion<>(47, Notes.E.setOctave(7).getBaseNoteLabel()),

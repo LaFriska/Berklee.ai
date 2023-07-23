@@ -61,10 +61,9 @@ public class Note {
      * Returns the white note position of the base note on the piano. Inputting a note without a defined octave
      * value will cause an exception.
      * **/
-    public int getBaseNoteNumber(){
-        if(isOctaveAbstract()) throw new NoteOctaveException("Cannot get base note number of a note without a defined octave number.");
-        checkOctaveRange(octaveValue, baseNote.value);
-        return 2 + ((octaveValue - 1) * 7) + baseNote.solfeggeValue;
+    public int getBaseNoteLabel(){
+        if(isOctaveAbstract()) throw new BaseNoteException("Cannot find base note label of a note with abstract octave.");
+        return (7 * (getOctaveValue() - 1)) + baseNote.solfeggeValue + 2;
     }
 
     /**
@@ -148,15 +147,6 @@ public class Note {
     public Note abstractOctave(){
         this.octaveValue = -1;
         return this;
-    }
-
-    public int getBaseNoteLabel(){
-        if(isOctaveAbstract()) throw new BaseNoteException("Cannot find base note label of a note with abstract octave.");
-        if(getOctaveValue() == 0){
-            if (baseNote == BaseNote.A) return 1;
-            else if (baseNote == BaseNote.B) return 2;
-            else throw new BaseNoteException("Invalid base note or octave");
-        }else return (7 * (getOctaveValue() - 1)) + baseNote.solfeggeValue;
     }
 
     /**

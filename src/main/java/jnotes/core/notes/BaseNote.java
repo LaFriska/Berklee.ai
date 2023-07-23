@@ -18,7 +18,7 @@ public enum BaseNote {
 
     public final int solfeggeValue;
 
-    public static Note[] BASE_NOTES = new Note[]{
+    public static final Note[] BASE_NOTES = new Note[]{
             new Note(BaseNote.A, Alteration.NATURAL).setOctave(0),
             new Note(BaseNote.B, Alteration.NATURAL).setOctave(0),
             new Note(BaseNote.C, Alteration.NATURAL).setOctave(1),

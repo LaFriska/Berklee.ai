@@ -32,7 +32,7 @@ public class IntervalCalculator {
     }
 
     private int setValue() {
-        return upper.getBaseNoteNumber() - lower.getBaseNoteNumber() + 1;
+        return upper.getBaseNoteLabel() - lower.getBaseNoteLabel() + 1;
     }
 
     private IntervalQuality setQuality(int value) {
