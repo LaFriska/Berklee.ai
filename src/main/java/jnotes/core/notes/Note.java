@@ -1,11 +1,12 @@
 package jnotes.core.notes;
 
+import jnotes.exceptions.BaseNoteException;
 import jnotes.exceptions.NoteOctaveException;
 import org.jetbrains.annotations.NotNull;
 
 public class Note {
 
-    private final NoteBase noteBase;
+    private final BaseNote baseNote;
     private final Alteration alteration;
 
     private final int value;
@@ -13,13 +14,13 @@ public class Note {
 
     private final boolean immutable;
 
-    protected Note(@NotNull NoteBase noteBase, Alteration alteration, boolean immutable){
+    protected Note(@NotNull BaseNote baseNote, Alteration alteration, boolean immutable){
         int value;
-        this.noteBase = noteBase;
+        this.baseNote = baseNote;
         if(alteration == null) this.alteration = Alteration.NATURAL;
         else this.alteration = alteration;
         //Modulo 12 to get note values to stay in GF(12)
-        value = (noteBase.value + this.alteration.value) % 12;
+        value = (baseNote.value + this.alteration.value) % 12;
         if(value <= 0) value = 12 + value;
         this.value = value;
         this.immutable = immutable;
@@ -29,21 +30,21 @@ public class Note {
      * This object creates an abstraction for a musical note.
      * Data such as the spelling and pitch value are to be stored in this object.
      *
-     * @param noteBase Base note without any accidentals.
+     * @param baseNote Base note without any accidentals.
      * @param alteration Alterations such as a sharp, double sharp or a flat to the base note.
      * **/
-    public Note(@NotNull NoteBase noteBase, Alteration alteration){
-        this(noteBase, alteration, false);
+    public Note(@NotNull BaseNote baseNote, Alteration alteration){
+        this(baseNote, alteration, false);
     }
 
     /**
      * This object creates an abstraction for a musical note.
      * Data such as the spelling and pitch value are to be stored in this object.
      *
-     * @param noteBase Base note without any accidentals.
+     * @param baseNote Base note without any accidentals.
      * **/
-    public Note(NoteBase noteBase){
-        this(noteBase, Alteration.NATURAL);
+    public Note(BaseNote baseNote){
+        this(baseNote, Alteration.NATURAL);
     }
 
     /**
@@ -52,8 +53,8 @@ public class Note {
      * **/
     public int getSemitonesNumber(){
         if(isOctaveAbstract()) throw new NoteOctaveException("Cannot get semitone number of a note without a defined octave number.");
-        checkOctaveRange(octaveValue, noteBase.value);
-        return 3 + ((octaveValue - 1) * 12) + (noteBase.value + alteration.value);
+        checkOctaveRange(octaveValue, baseNote.value);
+        return 3 + ((octaveValue - 1) * 12) + (baseNote.value + alteration.value);
     }
 
     /**
@@ -62,8 +63,8 @@ public class Note {
      * **/
     public int getBaseNoteNumber(){
         if(isOctaveAbstract()) throw new NoteOctaveException("Cannot get base note number of a note without a defined octave number.");
-        checkOctaveRange(octaveValue, noteBase.value);
-        return 2 + ((octaveValue - 1) * 7) + noteBase.solfeggeValue;
+        checkOctaveRange(octaveValue, baseNote.value);
+        return 2 + ((octaveValue - 1) * 7) + baseNote.solfeggeValue;
     }
 
     /**
@@ -101,8 +102,8 @@ public class Note {
     /**
      * @return Returns the note base represented by an enum.
      * **/
-    public NoteBase getNoteBase() {
-        return noteBase;
+    public BaseNote getNoteBase() {
+        return baseNote;
     }
 
     /**
@@ -149,6 +150,15 @@ public class Note {
         return this;
     }
 
+    public int getBaseNoteLabel(){
+        if(isOctaveAbstract()) throw new BaseNoteException("Cannot find base note label of a note with abstract octave.");
+        if(getOctaveValue() == 0){
+            if (baseNote == BaseNote.A) return 1;
+            else if (baseNote == BaseNote.B) return 2;
+            else throw new BaseNoteException("Invalid base note or octave");
+        }else return (7 * (getOctaveValue() - 1)) + baseNote.solfeggeValue;
+    }
+
     /**
      * Defines the octave for this note. Upon instantiation, the octave value is by default
      * set to -1, meaning that is abstract. This method however, sets the note to a specific octave
@@ -160,7 +170,7 @@ public class Note {
      * this note is C, entering 3 into this method will make it a C3. Entering an integer outside the musical pitch range will cause an exception.
      * **/
     public Note setOctave(int octaveValue){
-        checkOctaveRange(octaveValue, noteBase.value);
+        checkOctaveRange(octaveValue, baseNote.value);
         if(immutable) return this.createMutableClone().setOctave(octaveValue);
         this.octaveValue = octaveValue;
         return this;
@@ -171,7 +181,7 @@ public class Note {
      * be changed.
      * **/
     public Note createMutableClone(){
-        return new Note(noteBase, alteration);
+        return new Note(baseNote, alteration);
     }
 
     /**
@@ -207,9 +217,14 @@ public class Note {
      * **/
     public String getSpelling(){
         StringBuilder spelling = new StringBuilder();
-        spelling.append(noteBase.toString());
+        spelling.append(baseNote.toString());
         if(alteration != Alteration.NATURAL) spelling.append(alteration.symbol);
         return spelling.toString();
+    }
+
+    @Override
+    public String toString() {
+        return getSpelling();
     }
 }
 

@@ -1,5 +1,8 @@
 package jnotes.test;
 
+import jnotes.core.notes.Alteration;
+import jnotes.core.notes.BaseNote;
+import jnotes.core.notes.Note;
 import jnotes.test.testutil.Test;
 
 public class Main {
@@ -12,6 +15,7 @@ public class Main {
 
     private static void runTest(){
         NotesTest.comparison();
+        NotesTest.pitch();
         NotesTest.pitch();
         IntervalsTest.values();
         test.run();

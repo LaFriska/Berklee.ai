@@ -121,4 +121,10 @@ public class IntervalCalculator {
     public String toString() {
         return this.getFormattedName();
     }
+
+    //---------------------------------------------STATIC--------------------------------------------------------//
+
+    public static Note getNoteIntervalAbove(Note startingNote, Interval interval){
+        return null;
+    }
 }

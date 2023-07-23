@@ -2,7 +2,7 @@ package jnotes.test;
 
 import jnotes.core.notes.Alteration;
 import jnotes.core.notes.Note;
-import jnotes.core.notes.NoteBase;
+import jnotes.core.notes.BaseNote;
 import jnotes.core.notes.Notes;
 import jnotes.test.testutil.Assertion;
 import jnotes.test.testutil.Suite;
@@ -44,15 +44,15 @@ public class NotesTest {
 
         Main.test.addSuite(
                 new Suite("Notes.Comparison.Equivalency").addAssertions(
-                        new Assertion<>(true, Notes.A.equals(new Note(NoteBase.A))),
-                        new Assertion<>(true, Notes.B_DOUBLE_SHARP.equals(new Note(NoteBase.B, Alteration.DOUBLE_SHARP))),
-                        new Assertion<>(false, Notes.B_SHARP.equals(new Note(NoteBase.B, Alteration.DOUBLE_SHARP))),
-                        new Assertion<>(true, Notes.C.equals(new Note(NoteBase.C))),
-                        new Assertion<>(true, Notes.C_SHARP.equals(new Note(NoteBase.C, Alteration.SHARP))),
-                        new Assertion<>(false, Notes.E.equals(new Note(NoteBase.D, Alteration.DOUBLE_SHARP))),
-                        new Assertion<>(false, Notes.G_FLAT.equals(new Note(NoteBase.A, Alteration.SHARP))),
-                        new Assertion<>(false, Notes.F_FLAT.equals(new Note(NoteBase.D, Alteration.DOUBLE_SHARP))),
-                        new Assertion<>(true, Notes.C_DOUBLE_FLAT.equals(new Note(NoteBase.C, Alteration.DOUBLE_FLAT)))
+                        new Assertion<>(true, Notes.A.equals(new Note(BaseNote.A))),
+                        new Assertion<>(true, Notes.B_DOUBLE_SHARP.equals(new Note(BaseNote.B, Alteration.DOUBLE_SHARP))),
+                        new Assertion<>(false, Notes.B_SHARP.equals(new Note(BaseNote.B, Alteration.DOUBLE_SHARP))),
+                        new Assertion<>(true, Notes.C.equals(new Note(BaseNote.C))),
+                        new Assertion<>(true, Notes.C_SHARP.equals(new Note(BaseNote.C, Alteration.SHARP))),
+                        new Assertion<>(false, Notes.E.equals(new Note(BaseNote.D, Alteration.DOUBLE_SHARP))),
+                        new Assertion<>(false, Notes.G_FLAT.equals(new Note(BaseNote.A, Alteration.SHARP))),
+                        new Assertion<>(false, Notes.F_FLAT.equals(new Note(BaseNote.D, Alteration.DOUBLE_SHARP))),
+                        new Assertion<>(true, Notes.C_DOUBLE_FLAT.equals(new Note(BaseNote.C, Alteration.DOUBLE_FLAT)))
                 )
         );
 
@@ -94,6 +94,24 @@ public class NotesTest {
                         new Assertion<>("E♭", Notes.E_FLAT.getSpelling()),
                         new Assertion<>("F\uD834\uDD2A", Notes.F_DOUBLE_SHARP.getSpelling()),
                         new Assertion<>("G", Notes.G.getSpelling())
+                )
+        );
+    }
+
+    protected static void misc(){
+        Main.test.addSuite(
+                new Suite("Notes.Misc.BaseNotes").addAssertions(
+                        new Assertion<>(1, Notes.A.setOctave(0).getBaseNoteLabel()),
+                        new Assertion<>(2, Notes.B.setOctave(0).getBaseNoteLabel()),
+                        new Assertion<>(3, Notes.C.setOctave(1).getBaseNoteLabel()),
+                        new Assertion<>(4, Notes.D.setOctave(1).getBaseNoteLabel()),
+                        new Assertion<>(8, Notes.A.setOctave(1).getBaseNoteLabel()),
+                        new Assertion<>(9, Notes.B.setOctave(1).getBaseNoteLabel()),
+                        new Assertion<>(12, Notes.E.setOctave(1).getBaseNoteLabel()),
+                        new Assertion<>(43, Notes.A.setOctave(6).getBaseNoteLabel()),
+                        new Assertion<>(34, Notes.F.setOctave(5).getBaseNoteLabel()),
+                        new Assertion<>(47, Notes.E.setOctave(7).getBaseNoteLabel()),
+                        new Assertion<>(15, Notes.A.setOctave(2).getBaseNoteLabel())
                 )
         );
     }
