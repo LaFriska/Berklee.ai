@@ -1,6 +1,7 @@
 package jnotes.core.notes;
 
 import jnotes.debug.MissingJavadoc;
+import jnotes.exceptions.AlterationException;
 
 @MissingJavadoc
 public enum Alteration {
@@ -17,5 +18,16 @@ public enum Alteration {
     Alteration(int value, String symbol) {
         this.value = value;
         this.symbol = symbol;
+    }
+
+    public static Alteration get(int value){
+        switch (value){
+            case -2 -> {return DOUBLE_FLAT;}
+            case -1 -> {return FLAT;}
+            case 0 -> {return NATURAL;}
+            case 1 -> {return SHARP;}
+            case 2 -> {return DOUBLE_SHARP;}
+            default -> throw new AlterationException("No such alteration.");
+        }
     }
 }

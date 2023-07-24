@@ -1,5 +1,6 @@
 package jnotes.core.notes;
 
+import jnotes.exceptions.AlterationException;
 import jnotes.exceptions.BaseNoteException;
 import jnotes.exceptions.NoteOctaveException;
 import org.jetbrains.annotations.NotNull;
@@ -7,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 public class Note {
 
     private final BaseNote baseNote;
-    private final Alteration alteration;
+    private Alteration alteration;
 
     private final int value;
     private int octaveValue = -1; //Abstract octave can be set to -1
@@ -171,7 +172,7 @@ public class Note {
      * be changed.
      * **/
     public Note createMutableClone(){
-        return new Note(baseNote, alteration);
+        return isOctaveAbstract() ? new Note(baseNote, alteration) : new Note(baseNote, alteration).setOctave(octaveValue);
     }
 
     /**
@@ -210,6 +211,27 @@ public class Note {
         spelling.append(baseNote.toString());
         if(alteration != Alteration.NATURAL) spelling.append(alteration.symbol);
         return spelling.toString();
+    }
+
+    /**
+     * Alters this note by a set integer. If the total alteration exceeds a double flat or a double sharp,
+     * an exception will be thrown.
+     *
+     * @return Returns a copy of the same note with the new alteration.
+     * @param alterationValue Offset of the alteration, a positive number indicates an alteration upwards, while
+     *                        a negative number indicates an alteration downwards. For example, if the note originally
+     *                        has an alteration of a single flat, a -1 alteration parsed into this parameter will cause
+     *                        the alteration to change to a double flat.
+     * **/
+    public Note getAltered(int alterationValue){
+        alterationValue = this.alteration.value + alterationValue;
+        if(alterationValue < -2 || alterationValue > 2) throw new AlterationException("Alteration" + alterationValue +  "out of bound.");
+        else return this.createMutableClone().alter(alterationValue);
+    }
+
+    private Note alter(int value){
+        this.alteration = Alteration.get(value);
+        return this;
     }
 
     @Override

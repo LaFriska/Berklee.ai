@@ -1,8 +1,10 @@
 package jnotes.core.intervals;
 
+import jnotes.core.notes.BaseNote;
 import jnotes.core.notes.Note;
 import jnotes.debug.MissingJavadoc;
 import jnotes.exceptions.IntervalException;
+import org.jetbrains.annotations.NotNull;
 
 public class IntervalCalculator {
 
@@ -22,7 +24,7 @@ public class IntervalCalculator {
      * @param upper Upper note of the two notes being compared. Similarly to the lower note, the
      *              upper note should be enharmonically equal or higher than the lower note.
      * **/
-    public IntervalCalculator(Note lower, Note upper){
+    public IntervalCalculator(@NotNull Note lower, @NotNull Note upper){
         if(lower.isOctaveAbstract() || upper.isOctaveAbstract()) throw new IntervalException("Octaves cannot be abstract to process intervals");
         if(lower.getSemitonesNumber() > upper.getSemitonesNumber()) throw new IntervalException("Lower note cannot be higher than upper note.");
         this.lower = lower;
@@ -39,7 +41,7 @@ public class IntervalCalculator {
         //if(upperSem < lowerSem) upperSem = upperSem + 12;
         int diff = upper.getSemitonesNumber() - lower.getSemitonesNumber();
 
-        switch((value - 1) % 7){
+        switch(getModdedValue(value)){
             case 0 -> {return mapQuality(true, -4, diff);}
             case 1 -> {return mapQuality(false, -3, diff);}
             case 2 -> {return mapQuality(false, -1, diff);}
@@ -49,6 +51,10 @@ public class IntervalCalculator {
             case 6 -> {return mapQuality(false, 6, diff);}
             default -> throw new IntervalException("Cannot process interval value of " + value + ".");
         }
+    }
+
+    protected static int getModdedValue(int value){
+        return (value - 1) % 7;
     }
 
     private IntervalQuality mapQuality(boolean perfectable, int startingDiff, int diff){
@@ -82,6 +88,11 @@ public class IntervalCalculator {
                 default -> throw new IntervalException(exceptionMsg);
             }
         }
+    }
+
+    @MissingJavadoc
+    public int getDistance(){
+        return getInterval().getDistance();
     }
 
     /**
@@ -124,7 +135,11 @@ public class IntervalCalculator {
 
     //---------------------------------------------STATIC--------------------------------------------------------//
 
-    public static Note getNoteIntervalAbove(Note startingNote, Interval interval){
+    public static Note getNoteAbove(Note startingNote, Interval interval){
+        //TODO add try catch incase note goes out of bound.
+        if(startingNote.isOctaveAbstract()) throw new IntervalException("Octave must not be abstract for this method to run.");
+        Note newBaseNote = BaseNote.get(startingNote.getBaseNoteLabel() + interval.getValue() - 1);
+
         return null;
     }
 }

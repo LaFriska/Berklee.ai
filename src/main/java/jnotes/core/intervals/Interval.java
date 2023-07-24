@@ -1,7 +1,10 @@
 package jnotes.core.intervals;
 
+import jnotes.debug.MissingJavadoc;
 import jnotes.exceptions.IntervalException;
 import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
 
 public class Interval {
 
@@ -72,5 +75,47 @@ public class Interval {
      * **/
     public IntervalQuality getQuality() {
         return quality;
+    }
+
+    @MissingJavadoc
+    public int getDistance(){
+        int valueCalc = this.value;
+        int octaves = 0;
+        while(valueCalc > 7){
+            octaves++;
+            valueCalc = valueCalc - 7;
+        }
+        octaves = octaves * 12;
+        boolean perfectable = valueCalc == 1 || valueCalc == 4 || valueCalc == 5;
+        valueCalc = getNonCompoundSemitones(perfectable, valueCalc);
+        return octaves + valueCalc;
+    }
+
+    private int getNonCompoundSemitones(boolean perfectable, int value){
+        switch (value){
+            case 1 -> {value=0;}
+            case 2 -> {value=2;}
+            case 3 -> {value=4;}
+            case 4 -> {value=5;}
+            case 5 -> {value=7;}
+            case 6 -> {value=9;}
+            case 7 -> {value=11;}
+            default -> throw new RuntimeException("Invalid input for value " + value + ".");
+        }
+
+        int alt = 0;
+
+        switch (this.quality){
+            case QUADRUPLE_AUGMENTED -> {alt = 4;}
+            case TRIPLE_AUGMENTED -> {alt = 3;}
+            case DOUBLE_AUGMENTED -> {alt = 2;}
+            case AUGMENTED -> {alt = 1;}
+            case MINOR -> {alt = -1;}
+            case DIMINISHED -> {alt = perfectable ? -1 : -2;}
+            case DOUBLE_DIMINISHED -> {alt = perfectable ? -2 : -3;}
+            case TRIPLE_DIMINISHED -> {alt = perfectable ? -3 : -4;}
+            case QUADRUPLE_DIMINISHED -> {alt = perfectable ? -4 : -5;}
+        }
+        return value + alt;
     }
 }

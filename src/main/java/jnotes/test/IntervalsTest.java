@@ -1,6 +1,8 @@
 package jnotes.test;
 
+import jnotes.core.intervals.Interval;
 import jnotes.core.intervals.IntervalCalculator;
+import jnotes.core.intervals.IntervalQuality;
 import jnotes.core.notes.Notes;
 import jnotes.test.testutil.Assertion;
 import jnotes.test.testutil.Suite;
@@ -61,7 +63,23 @@ public class IntervalsTest {
                         new Assertion<>("Augmented Octave", new IntervalCalculator(Notes.B_FLAT.setOctave(5), Notes.B.setOctave(6)).getFormattedName()),
                         new Assertion<>("Quadruple Augmented 6th", new IntervalCalculator(Notes.F_DOUBLE_FLAT.setOctave(3), Notes.D_DOUBLE_SHARP.setOctave(4)).getFormattedName()),
                         new Assertion<>("Augmented 9th", new IntervalCalculator(Notes.A_SHARP.setOctave(0), Notes.B_DOUBLE_SHARP.setOctave(1)).getFormattedName())
-                )
+                ),
+
+        new Suite("Intervals.Values.Distance").addAssertions(
+                new Assertion<>(4, new IntervalCalculator(Notes.C.setOctave(2), Notes.E.setOctave(2)).getDistance()),
+                new Assertion<>(8, new Interval(7, IntervalQuality.DOUBLE_DIMINISHED).getDistance()),
+                new Assertion<>(12, new Interval(8, IntervalQuality.PERFECT).getDistance()),
+                new Assertion<>(7, new Interval(5, IntervalQuality.PERFECT).getDistance()),
+                new Assertion<>(8, new Interval(5, IntervalQuality.AUGMENTED).getDistance()),
+                new Assertion<>(13, new Interval(9, IntervalQuality.MINOR).getDistance()),
+                new Assertion<>(19, new Interval(11, IntervalQuality.DOUBLE_AUGMENTED).getDistance()),
+                new Assertion<>(22, new Interval(13, IntervalQuality.AUGMENTED).getDistance()),
+                new Assertion<>(3, new Interval(5, IntervalQuality.QUADRUPLE_DIMINISHED).getDistance()),
+                new Assertion<>(15, new Interval(12, IntervalQuality.QUADRUPLE_DIMINISHED).getDistance()),
+                new Assertion<>(28, new Interval(15, IntervalQuality.QUADRUPLE_AUGMENTED).getDistance()),
+                new Assertion<>(5, new Interval(6, IntervalQuality.TRIPLE_DIMINISHED).getDistance()),
+                new Assertion<>(20, new Interval(13, IntervalQuality.MINOR).getDistance())
+            )
         );
     }
 }
