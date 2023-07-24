@@ -205,12 +205,27 @@ public class Note {
 
     /**
      * Returns a string with the correct chord spelling.
+     * 
+     * @param includeOctave If true, the note spelling will include the octave
+     *                      value at the end. For example, a note spelling with an octave 
+     *                      value would be C7, while one without would be just C.
      * **/
-    public String getSpelling(){
+    public String getSpelling(boolean includeOctave){
+        if(includeOctave && isOctaveAbstract()) return getSpelling();
         StringBuilder spelling = new StringBuilder();
         spelling.append(baseNote.toString());
         if(alteration != Alteration.NATURAL) spelling.append(alteration.symbol);
+        if(includeOctave) spelling.append(octaveValue);
         return spelling.toString();
+    }
+
+    /**
+     * Returns a string with the correct chord spelling without an octave value. 
+     * 
+     * @see Note#getSpelling(boolean) 
+     * **/
+    public String getSpelling(){
+        return getSpelling(false);
     }
 
     /**

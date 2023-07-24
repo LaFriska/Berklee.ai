@@ -99,7 +99,7 @@ public class NotesTest {
     }
 
     protected static void misc(){
-        Main.test.addSuite(
+        Main.test.addSuites(
                 new Suite("Notes.Misc.BaseNotes").addAssertions(
                         new Assertion<>(1, Notes.A.setOctave(0).getBaseNoteLabel()),
                         new Assertion<>(2, Notes.B.setOctave(0).getBaseNoteLabel()),
@@ -112,6 +112,9 @@ public class NotesTest {
                         new Assertion<>(34, Notes.F.setOctave(5).getBaseNoteLabel()),
                         new Assertion<>(47, Notes.E.setOctave(7).getBaseNoteLabel()),
                         new Assertion<>(15, Notes.A.setOctave(2).getBaseNoteLabel())
+                ),
+                new Suite("Notes.Misc.getIntervals").addAssertions(
+
                 )
         );
     }
