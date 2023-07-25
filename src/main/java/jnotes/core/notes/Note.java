@@ -1,7 +1,10 @@
 package jnotes.core.notes;
 
+import jnotes.core.intervals.Interval;
+import jnotes.core.intervals.IntervalCalculator;
 import jnotes.exceptions.AlterationException;
 import jnotes.exceptions.BaseNoteException;
+import jnotes.exceptions.IntervalException;
 import jnotes.exceptions.NoteOctaveException;
 import org.jetbrains.annotations.NotNull;
 
@@ -240,13 +243,28 @@ public class Note {
      * **/
     public Note getAltered(int alterationValue){
         alterationValue = this.alteration.value + alterationValue;
-        if(alterationValue < -2 || alterationValue > 2) throw new AlterationException("Alteration" + alterationValue +  "out of bound.");
+        if(alterationValue < -2 || alterationValue > 2) throw new AlterationException("Alteration " + alterationValue +  " out of bound.");
         else return this.createMutableClone().alter(alterationValue);
     }
 
     private Note alter(int value){
         this.alteration = Alteration.get(value);
         return this;
+    }
+
+    public Note getNoteAbove(Interval interval){
+        if(this.isOctaveAbstract()) throw new IntervalException("Octave must not be abstract for this method to run.");
+        Note newBaseNote = BaseNote.get(this.getBaseNoteLabel() + interval.getValue() - 1);
+        int diff;
+        try {
+            int compare = new IntervalCalculator(this, newBaseNote).getDistance();
+            diff = interval.getDistance() - compare;
+        }catch (IntervalException e){
+            int compare = new IntervalCalculator(newBaseNote, this).getDistance();
+            diff = compare - interval.getDistance();
+        }
+
+        return newBaseNote.getAltered(diff);
     }
 
     @Override

@@ -20,6 +20,7 @@ public class Main {
         NotesTest.pitch();
         NotesTest.misc();
         IntervalsTest.values();
+        IntervalsTest.noteFinder();
         test.run();
     }
 }

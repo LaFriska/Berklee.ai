@@ -132,16 +132,4 @@ public class IntervalCalculator {
     public String toString() {
         return this.getFormattedName();
     }
-
-    //---------------------------------------------STATIC--------------------------------------------------------//
-
-    public static Note getNoteAbove(Note startingNote, Interval interval){
-        //TODO add try catch incase note goes out of bound.
-        if(startingNote.isOctaveAbstract()) throw new IntervalException("Octave must not be abstract for this method to run.");
-        Note newBaseNote = BaseNote.get(startingNote.getBaseNoteLabel() + interval.getValue() - 1);
-        int compare = new IntervalCalculator(startingNote, newBaseNote).getDistance();
-        int diff = compare = interval.getDistance();
-
-        return newBaseNote.getAltered(diff);
-    }
 }

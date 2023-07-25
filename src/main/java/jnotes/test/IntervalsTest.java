@@ -82,4 +82,38 @@ public class IntervalsTest {
             )
         );
     }
+
+    protected static void noteFinder(){
+        Main.test.addSuites(
+                new Suite("Intervals.Values.NoteFinder").addAssertions(
+                        new Assertion<>(Notes.E.setOctave(4).getSpelling(true),
+                                Notes.C.setOctave(4).getNoteAbove(new Interval(3, IntervalQuality.MAJOR)).getSpelling(true)),
+                        new Assertion<>(Notes.E_FLAT.setOctave(4).getSpelling(true),
+                                Notes.C.setOctave(4).getNoteAbove(new Interval(3, IntervalQuality.MINOR)).getSpelling(true)),
+                        new Assertion<>(Notes.G.setOctave(7).getSpelling(true),
+                                Notes.A.setOctave(6).getNoteAbove(new Interval(7, IntervalQuality.MINOR)).getSpelling(true)),
+                        new Assertion<>(Notes.C_FLAT.setOctave(3).getSpelling(true),
+                                Notes.B.setOctave(2).getNoteAbove(new Interval(2, IntervalQuality.DIMINISHED)).getSpelling(true)),
+                        new Assertion<>(Notes.B_SHARP.setOctave(2).getSpelling(true),
+                                Notes.F_SHARP.setOctave(2).getNoteAbove(new Interval(4, IntervalQuality.AUGMENTED)).getSpelling(true)),
+                        new Assertion<>(Notes.B_DOUBLE_SHARP.setOctave(2).getSpelling(true),
+                                Notes.F_SHARP.setOctave(2).getNoteAbove(new Interval(4, IntervalQuality.DOUBLE_AUGMENTED)).getSpelling(true)),
+                        new Assertion<>(Notes.C_FLAT.setOctave(3).getSpelling(true),
+                                Notes.G_DOUBLE_SHARP.setOctave(2).getNoteAbove(new Interval(4, IntervalQuality.TRIPLE_DIMINISHED)).getSpelling(true)),
+                        new Assertion<>(Notes.D_DOUBLE_FLAT.setOctave(6).getSpelling(true),
+                                Notes.D_DOUBLE_FLAT.setOctave(4).getNoteAbove(new Interval(15, IntervalQuality.PERFECT)).getSpelling(true)),
+                        new Assertion<>(Notes.D_SHARP.setOctave(6).getSpelling(true),
+                                Notes.D_DOUBLE_FLAT.setOctave(4).getNoteAbove(new Interval(15, IntervalQuality.TRIPLE_AUGMENTED)).getSpelling(true)),
+                        new Assertion<>(Notes.F.setOctave(6).getSpelling(true),
+                                Notes.A_FLAT.setOctave(4).getNoteAbove(new Interval(13, IntervalQuality.MAJOR)).getSpelling(true)),
+                        new Assertion<>(Notes.D_DOUBLE_SHARP.setOctave(5).getSpelling(true),
+                                Notes.D_DOUBLE_SHARP.setOctave(5).getNoteAbove(new Interval(1, IntervalQuality.PERFECT)).getSpelling(true)),
+                        new Assertion<>(Notes.E_SHARP.setOctave(5).getSpelling(true),
+                                Notes.A_DOUBLE_SHARP.setOctave(3).getNoteAbove(new Interval(12, IntervalQuality.DIMINISHED)).getSpelling(true)),
+                        new Assertion<>(Notes.B_FLAT.setOctave(4).getSpelling(true),
+                                Notes.A.setOctave(3).getNoteAbove(new Interval(9, IntervalQuality.MINOR)).getSpelling(true))
+
+                )
+        );
+    }
 }
