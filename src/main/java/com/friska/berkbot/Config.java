@@ -1,4 +1,4 @@
 package com.friska.berkbot;
 
-public record Config(String token, String prefix, String prefix2) {
+public record Config(String token, String prefix, String prefix2, String copyright, String botid) {
 }

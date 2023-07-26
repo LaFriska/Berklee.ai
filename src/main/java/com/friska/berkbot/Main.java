@@ -28,7 +28,11 @@ public class Main {
         String fileName = "src/main/resources/berkbot.config";
         try (FileInputStream fis = new FileInputStream(fileName)) {
             prop.load(fis);
-            return new Config(prop.getProperty("token"), prop.getProperty("prefix"), prop.getProperty("prefix2"));
+            return new Config(prop.getProperty("token"),
+                    prop.getProperty("prefix"),
+                    prop.getProperty("prefix2"),
+                    "Copyright © " + prop.getProperty("copyright") + " by Friska",
+                    prop.getProperty("botid"));
         } catch (IOException ignored) {
             return null;
         }

@@ -1,16 +1,35 @@
 package com.friska.berkbot.trainer;
 
+import com.friska.berkbot.Main;
 import com.friska.jnotes.core.intervals.Interval;
 import com.friska.jnotes.core.intervals.IntervalQuality;
 import com.friska.jnotes.core.notes.Alteration;
 import com.friska.jnotes.core.notes.BaseNote;
 import com.friska.jnotes.core.notes.Note;
+import net.dv8tion.jda.api.EmbedBuilder;
 
+import java.awt.*;
 import java.util.Random;
 
 public class IntervalQuestion {
 
     private static final Interval[] easy = new Interval[]{
+            new Interval(1, IntervalQuality.PERFECT),
+            new Interval(2, IntervalQuality.MINOR),
+            new Interval(2, IntervalQuality.MAJOR),
+            new Interval(3, IntervalQuality.MINOR),
+            new Interval(3, IntervalQuality.MAJOR),
+            new Interval(4, IntervalQuality.PERFECT),
+            new Interval(4, IntervalQuality.AUGMENTED),
+            new Interval(5, IntervalQuality.DIMINISHED),
+            new Interval(5, IntervalQuality.PERFECT),
+            new Interval(6, IntervalQuality.MINOR),
+            new Interval(6, IntervalQuality.MAJOR),
+            new Interval(7, IntervalQuality.MINOR),
+            new Interval(7, IntervalQuality.MAJOR)
+    };
+
+    private static final Interval[] medium = new Interval[]{
             new Interval(1, IntervalQuality.PERFECT),
             new Interval(2, IntervalQuality.MINOR),
             new Interval(2, IntervalQuality.MAJOR),
@@ -42,9 +61,10 @@ public class IntervalQuestion {
 
     private Note getRandomStartingNote(){
         Random r = new Random();
+
         int oct = r.nextInt(2) + 3;
         Note note = new Note(BaseNote.getNoteBaseFromSolfegge(r.nextInt(7) + 1),
-                Alteration.get(r.nextInt(3) - 1));
+               difficulty == 1 ? Alteration.get(r.nextInt(3) - 1) : Alteration.NATURAL);
         return note.setOctave(oct);
     }
 
@@ -54,11 +74,19 @@ public class IntervalQuestion {
         return easy[r.nextInt(easy.length)];
     }
 
-    public String getQuestion(){
+    public EmbedBuilder getQuestion(){
         //TODO add switch statement for difficulty
+        EmbedBuilder eb = new EmbedBuilder();
+
+        eb.setTitle("Interval Question");
+        eb.setColor(Color.GREEN);
+
         StringBuilder sb = new StringBuilder();
         sb.append("What is the interval between ").append(startingNote.getSpelling()).append(" and ").append(upperNote.getSpelling()).append("?")
                 .append("\n\n").append("Answer: ||").append(interval.getFormattedName()).append("||");
-        return sb.toString();
+
+        eb.setDescription(sb.toString());
+        eb.setFooter(Main.config.copyright());
+        return eb;
     }
 }
