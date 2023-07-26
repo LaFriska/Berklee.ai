@@ -31,3 +31,6 @@ google-services.json
 
 # Android Profiling
 *.hprof
+
+#config with bot token DO NOT DELETE
+/src/main/resources/berkbot.config

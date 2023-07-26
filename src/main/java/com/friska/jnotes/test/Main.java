@@ -9,8 +9,10 @@ public class Main {
     public static void main(String[] args) {
         runTest();
         //System.out.println(Notes.A.setOctave(0).getBaseNoteLabel());
-    }
 
+
+
+    }
     private static void runTest(){
         NotesTest.comparison();
         NotesTest.pitch();
