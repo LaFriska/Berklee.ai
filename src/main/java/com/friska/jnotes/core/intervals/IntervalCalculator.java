@@ -52,7 +52,7 @@ public class IntervalCalculator {
         }
     }
 
-    protected static int getModdedValue(int value){
+    public static int getModdedValue(int value){
         return (value - 1) % 7;
     }
 

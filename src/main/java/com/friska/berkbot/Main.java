@@ -1,5 +1,7 @@
 package com.friska.berkbot;
 
+import com.friska.berkbot.lilypond.LilyProcessor;
+import com.friska.berkbot.lilypond.req.LilyRequestMessage;
 import com.friska.berkbot.trainer.TrainerListener;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.requests.GatewayIntent;
@@ -7,10 +9,8 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
-import java.util.Random;
 
 public class Main {
-
     public static final Config config;
 
     static {
@@ -18,6 +18,9 @@ public class Main {
     }
 
     public static void main(String[] args) {
+    }
+
+    private static void build(){
         JDABuilder jdaBuilder = JDABuilder.createDefault(config.token()).enableIntents(GatewayIntent.MESSAGE_CONTENT);
         jdaBuilder.addEventListeners(new TrainerListener());
         jdaBuilder.build();
@@ -32,7 +35,8 @@ public class Main {
                     prop.getProperty("prefix"),
                     prop.getProperty("prefix2"),
                     "Copyright © " + prop.getProperty("copyright") + " by Friska",
-                    prop.getProperty("botid"));
+                    prop.getProperty("botid"),
+                    prop.getProperty("lilypond_path"));
         } catch (IOException ignored) {
             return null;
         }

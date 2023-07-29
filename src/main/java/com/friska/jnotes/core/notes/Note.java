@@ -2,11 +2,16 @@ package com.friska.jnotes.core.notes;
 
 import com.friska.jnotes.core.intervals.Interval;
 import com.friska.jnotes.core.intervals.IntervalCalculator;
+import com.friska.jnotes.core.intervals.IntervalQuality;
+import com.friska.jnotes.debug.MissingJavadoc;
 import com.friska.jnotes.exceptions.AlterationException;
 import com.friska.jnotes.exceptions.BaseNoteException;
 import com.friska.jnotes.exceptions.IntervalException;
 import com.friska.jnotes.exceptions.NoteOctaveException;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
 
 public class Note {
 
@@ -105,7 +110,7 @@ public class Note {
     /**
      * @return Returns the note base represented by an enum.
      * **/
-    public BaseNote getNoteBase() {
+    public BaseNote getBaseNote() {
         return baseNote;
     }
 
@@ -144,7 +149,7 @@ public class Note {
     * */
     public boolean equals(Note note){
         return equalsEnharmonically(note)
-                && note.getNoteBase() == this.getNoteBase()
+                && note.getBaseNote() == this.getBaseNote()
                 && note.getAlteration() == this.getAlteration();
     }
 
@@ -252,6 +257,7 @@ public class Note {
         return this;
     }
 
+    @MissingJavadoc
     public Note getNoteAbove(Interval interval){
         if(this.isOctaveAbstract()) throw new IntervalException("Octave must not be abstract for this method to run.");
         Note newBaseNote = BaseNote.get(this.getBaseNoteLabel() + interval.getValue() - 1);
@@ -265,6 +271,42 @@ public class Note {
         }
 
         return newBaseNote.getAltered(diff);
+    }
+
+    @MissingJavadoc
+    public Interval[] getPossibleIntervalQualitiesAbove(int intervalValue, IntervalQuality... omitted){
+
+
+        ArrayList<Interval> IQArrayList = new ArrayList<>();
+
+        for(int i = -2; i <= 2; i++){
+            IntervalCalculator interval = getIntervalInstance(intervalValue, i);
+            if(interval != null && doesNotHaveOmitted(interval.getInterval(), omitted)) IQArrayList.add(interval.getInterval());
+        }
+
+        Interval[] intervals = new Interval[IQArrayList.size()];
+        for (int i = 0; i < IQArrayList.size(); i++) {
+            intervals[i] = IQArrayList.get(i);
+        }
+
+        return intervals;
+
+    }
+
+    private boolean doesNotHaveOmitted(Interval interval, IntervalQuality... omitted){
+        for (IntervalQuality intervalQuality : omitted) {
+            if(interval.getQuality().equals(intervalQuality)) return false;
+        }
+        return true;
+    }
+
+    @Nullable
+    private IntervalCalculator getIntervalInstance(int value, int alteration){
+        try {
+            return new IntervalCalculator(this, BaseNote.get(getBaseNoteLabel() + value - 1).alter(alteration));
+        }catch (BaseNoteException | IntervalException e){
+            return null;
+        }
     }
 
     @Override
