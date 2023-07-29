@@ -8,6 +8,8 @@ import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class TrainerListener extends ListenerAdapter {
 
@@ -17,15 +19,15 @@ public class TrainerListener extends ListenerAdapter {
     }
 
     @Override
-    public void onMessageReceived(MessageReceivedEvent event) {
+    public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         assert Main.config != null;
         if(checkPrefix(event)){
             String msg = event.getMessage().getContentRaw();
             String[] msgSplit = msg.split(" ");
             if(msgSplit.length < 5 && msg.contains("interval")){
-                if(msg.contains("easy")) sendEasyIntervalQuestion(event.getChannel().asTextChannel());
-                if(msg.contains("med") || msg.contains("medium")) sendMediumIntervalQuestion(event.getChannel().asTextChannel());
-                if(msg.contains("hard") || msg.contains("difficult")) sendHardIntervalQuestion(event.getChannel().asTextChannel());
+                if(msg.contains("easy")) sendQuestion(event.getChannel().asTextChannel(), 0);
+                if(msg.contains("med") || msg.contains("medium")) sendQuestion(event.getChannel().asTextChannel(), 1);
+                if(msg.contains("hard") || msg.contains("difficult")) sendQuestion(event.getChannel().asTextChannel(), 2);
             }
         }
     }
@@ -35,47 +37,32 @@ public class TrainerListener extends ListenerAdapter {
         if(event.getMessage().getAuthor().getId().equals(Main.config.botid())){
             Button button = event.getButton();
             String id = button.getId();
+            TextChannel c = event.getChannel().asTextChannel();
             if(button.getId().equals("interval easy")) {
-                sendEasyIntervalQuestion(event.getChannel().asTextChannel());
-                event.deferEdit().queue();
+                event.deferReply().setEphemeral(true).queue();
+                sendQuestion(c, 0, event);
             }else if(button.getId().equals("interval med")) {
-                sendMediumIntervalQuestion(event.getChannel().asTextChannel());
-                event.deferEdit().queue();
+                event.deferReply().setEphemeral(true).queue();
+                sendQuestion(c, 1, event);
             }else if(button.getId().equals("interval hard")) {
-                sendHardIntervalQuestion(event.getChannel().asTextChannel());
-                event.deferEdit().queue();
+                event.deferReply().setEphemeral(true).queue();
+                sendQuestion(c, 2, event);
             }
         }
     }
 
-    private void sendEasyIntervalQuestion(TextChannel channel){
-
-        IntervalQuestion question = new IntervalQuestion(0);
-
-        LilyEmbedRequest request = new LilyEmbedRequest(channel, question.getQuestion(), question.getLilyCode())
-                .addActionRow(Button.secondary("interval easy", "Next"),
-                        Button.secondary("interval med", "Medium"),
-                        Button.secondary("interval hard", "Hard"));
-        LilyManager.INSTANCE.push(request);
+    private void sendQuestion(TextChannel channel, int difficulty){
+        sendQuestion(channel, difficulty, null);
     }
 
-    private void sendMediumIntervalQuestion(TextChannel channel){
-        IntervalQuestion question = new IntervalQuestion(1);
+    private void sendQuestion(TextChannel channel, int difficulty, @Nullable ButtonInteractionEvent event){
+        IntervalQuestion question = new IntervalQuestion(difficulty);
 
         LilyEmbedRequest request = new LilyEmbedRequest(channel, question.getQuestion(), question.getLilyCode())
-                .addActionRow(Button.secondary("interval easy", "Easy"),
-                        Button.secondary("interval med", "Next"),
-                        Button.secondary("interval hard", "Hard"));
-        LilyManager.INSTANCE.push(request);
-    }
-
-    private void sendHardIntervalQuestion(TextChannel channel){
-        IntervalQuestion question = new IntervalQuestion(2);
-
-        LilyEmbedRequest request = new LilyEmbedRequest(channel, question.getQuestion(), question.getLilyCode())
-                .addActionRow(Button.secondary("interval easy", "Easy"),
-                        Button.secondary("interval med", "Medium"),
-                        Button.secondary("interval hard", "Next"));
+                .addActionRow(Button.secondary("interval easy", difficulty == 0 ? "Next" : "Easy"),
+                        Button.secondary("interval med", difficulty == 1 ? "Next" : "Medium"),
+                        Button.secondary("interval hard", difficulty == 2 ? "Next" : "Hard"));
+        if(event != null) request.deleteDeferredReply(event);
         LilyManager.INSTANCE.push(request);
     }
 }
