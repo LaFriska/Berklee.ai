@@ -5,11 +5,11 @@ import net.dv8tion.jda.api.utils.FileUpload;
 
 import java.io.File;
 
-public class LilyRequestMessage extends LilyRequest{
+public class LilyMessageRequest extends LilyRequest{
 
     private MessageCreateAction messageCreateAction;
 
-    public LilyRequestMessage(MessageCreateAction messageCreateAction, String lilycode){
+    public LilyMessageRequest(MessageCreateAction messageCreateAction, String lilycode){
         super(lilycode);
         this.messageCreateAction = messageCreateAction;
     }

@@ -77,7 +77,6 @@ public class IntervalQuestion {
     }
 
     public EmbedBuilder getQuestion(){
-        //TODO add switch statement for difficulty
         EmbedBuilder eb = new EmbedBuilder();
 
         eb.setTitle("Interval Question");
@@ -104,5 +103,10 @@ public class IntervalQuestion {
         eb.setDescription(sb.toString());
         eb.setFooter(Main.config.copyright());
         return eb;
+    }
+
+    public String getLilyCode(){
+        return "\\version \"" + Main.config.lily_version() + "\"" + "\n\n" +
+                "{ <" + startingNote.getLily() + " " + upperNote.getLily() + "> }";
     }
 }

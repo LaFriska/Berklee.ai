@@ -313,5 +313,40 @@ public class Note {
     public String toString() {
         return getSpelling();
     }
+
+    /**
+     * Gets the Lilypond format of this note.
+     * **/
+    public String getLily(){
+        int oct;
+        if(isOctaveAbstract()) oct = 3;
+        else oct = getOctaveValue();
+        String base = this.baseNote.toString().toLowerCase();
+        String alt;
+        switch (alteration){
+            case FLAT -> alt = "es";
+            case SHARP -> alt = "is";
+            case DOUBLE_FLAT -> alt = "eses";
+            case DOUBLE_SHARP -> alt = "isis";
+            default -> alt = "";
+        }
+
+        String octaveAlt;
+
+        switch (oct){
+            case 0 -> octaveAlt = ",,,";
+            case 1 -> octaveAlt = ",,";
+            case 2 -> octaveAlt = ",";
+            case 4 -> octaveAlt = "'";
+            case 5 -> octaveAlt = "''";
+            case 6 -> octaveAlt = "'''";
+            case 7 -> octaveAlt = "''''";
+            case 8 -> octaveAlt = "'''''";
+            default -> octaveAlt = "";
+        }
+
+        return base + alt + octaveAlt;
+
+    }
 }
 

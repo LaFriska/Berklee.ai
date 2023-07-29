@@ -1,6 +1,8 @@
 package com.friska.berkbot.trainer;
 
 import com.friska.berkbot.Main;
+import com.friska.berkbot.lilypond.LilyManager;
+import com.friska.berkbot.lilypond.req.LilyEmbedRequest;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -47,29 +49,33 @@ public class TrainerListener extends ListenerAdapter {
     }
 
     private void sendEasyIntervalQuestion(TextChannel channel){
-        channel
-                .sendMessageEmbeds(new IntervalQuestion(0).getQuestion().build())
+
+        IntervalQuestion question = new IntervalQuestion(0);
+
+        LilyEmbedRequest request = new LilyEmbedRequest(channel, question.getQuestion(), question.getLilyCode())
                 .addActionRow(Button.secondary("interval easy", "Next"),
                         Button.secondary("interval med", "Medium"),
-                        Button.secondary("interval hard", "Hard"))
-                .queue();
+                        Button.secondary("interval hard", "Hard"));
+        LilyManager.INSTANCE.push(request);
     }
 
     private void sendMediumIntervalQuestion(TextChannel channel){
-        channel
-                .sendMessageEmbeds(new IntervalQuestion(1).getQuestion().build())
+        IntervalQuestion question = new IntervalQuestion(1);
+
+        LilyEmbedRequest request = new LilyEmbedRequest(channel, question.getQuestion(), question.getLilyCode())
                 .addActionRow(Button.secondary("interval easy", "Easy"),
                         Button.secondary("interval med", "Next"),
-                        Button.secondary("interval hard", "Hard"))
-                .queue();
+                        Button.secondary("interval hard", "Hard"));
+        LilyManager.INSTANCE.push(request);
     }
 
     private void sendHardIntervalQuestion(TextChannel channel){
-        channel
-                .sendMessageEmbeds(new IntervalQuestion(2).getQuestion().build())
+        IntervalQuestion question = new IntervalQuestion(2);
+
+        LilyEmbedRequest request = new LilyEmbedRequest(channel, question.getQuestion(), question.getLilyCode())
                 .addActionRow(Button.secondary("interval easy", "Easy"),
                         Button.secondary("interval med", "Medium"),
-                        Button.secondary("interval hard", "Next"))
-                .queue();
+                        Button.secondary("interval hard", "Next"));
+        LilyManager.INSTANCE.push(request);
     }
 }
