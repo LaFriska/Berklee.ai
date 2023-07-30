@@ -1,13 +1,27 @@
 package com.friska.jnotes.core.chords;
 
 import com.friska.jnotes.core.notes.Note;
+import com.friska.jnotes.debug.MissingJavadoc;
 
-public class ChordBuilder {
+@MissingJavadoc
+public class ChordBuilder{
 
-    /**
-     * Low level builder for chords, where each interval with respect to the root note
-     * is added manually to the ChordQuality class.
-     * **/
-    public ChordBuilder(){}
-//TODO
+    private final Note root;
+    private final ChordQuality quality;
+
+    public ChordBuilder(Note rootNote, ChordQuality chordQuality){
+        this.root = rootNote;
+        this.quality = chordQuality;
+    }
+
+    public ChordBuilder sus4(){
+        quality.sus4();
+        return this;
+    }
+
+    public ChordBuilder sus2(){
+        quality.sus2();
+        return this;
+    }
+
 }
