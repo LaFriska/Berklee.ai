@@ -1,5 +1,6 @@
 package com.friska.jnotes.core.notes;
 
+import com.friska.jnotes.core.ComparableElement;
 import com.friska.jnotes.core.intervals.Interval;
 import com.friska.jnotes.core.intervals.IntervalCalculator;
 import com.friska.jnotes.core.intervals.IntervalQuality;
@@ -13,7 +14,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 
-public class Note {
+public class Note implements ComparableElement<Note> {
 
     private final BaseNote baseNote;
     private Alteration alteration;
@@ -137,6 +138,7 @@ public class Note {
      * checks whether the note values are equal. For a description of note values, see {@link Note#getValue}.
      * For a method that returns true only if the notes are spelled the same, see the {@link Note#equals} method.
      * */
+    @Override
     public boolean equalsEnharmonically(Note note){
         return note.getValue() == this.getValue();
     }
@@ -147,6 +149,7 @@ public class Note {
      * return true. For a method that returns true as long as the notes compared are
      * equal enharmonically, see the {@link Note#equalsEnharmonically} method.
     * */
+    @Override
     public boolean equals(Note note){
         return equalsEnharmonically(note)
                 && note.getBaseNote() == this.getBaseNote()
@@ -257,7 +260,13 @@ public class Note {
         return this;
     }
 
-    @MissingJavadoc
+    /**
+     * Returns the note above of the given interval object. This method will only work if the octave is not abstract, and
+     * it will throw an exception if otherwise. If the interval above the note requires a note with more than two flats or sharps
+     * (e.g. a minor third above G double flat would be B triple flat), an exception will be thrown and should be caught accordingly
+     * when trying to use this method iteratively. It is also adviced to use {@link Note#getPossibleIntervalQualitiesAbove(int, IntervalQuality...)}
+     * to find possible intervals above this note before calling this method in order to prevent this issue.
+     * **/
     public Note getNoteAbove(Interval interval){
         if(this.isOctaveAbstract()) throw new IntervalException("Octave must not be abstract for this method to run.");
         Note newBaseNote = BaseNote.get(this.getBaseNoteLabel() + interval.getValue() - 1);
@@ -276,7 +285,12 @@ public class Note {
         }
     }
 
-    @MissingJavadoc
+    /**
+     * Given a interval value, this method finds the possible interval qualities in the context of the interval
+     * being used to find the note above the note this method is called from. This method is designed to be used
+     * together with {@link Note#getNoteAbove(Interval)} in order to fix the issue of notes being able to get as
+     * many flats and sharps as accidentals as possible.
+     * **/
     public Interval[] getPossibleIntervalQualitiesAbove(int intervalValue, IntervalQuality... omitted){
 
 

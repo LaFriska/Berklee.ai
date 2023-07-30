@@ -20,9 +20,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        Note note = Notes.G_DOUBLE_FLAT.setOctave(4);
-        note.getNoteAbove(new Interval(3, IntervalQuality.MINOR));
-        //build();
+        build();
     }
 
     private static void build(){

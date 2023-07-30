@@ -1,10 +1,11 @@
 package com.friska.jnotes.core.intervals;
 
+import com.friska.jnotes.core.ComparableElement;
 import com.friska.jnotes.debug.MissingJavadoc;
 import com.friska.jnotes.exceptions.IntervalException;
 import org.jetbrains.annotations.NotNull;
 
-public class Interval {
+public class Interval implements ComparableElement<Interval> {
 
     private final int value;
     private final IntervalQuality quality;
@@ -75,7 +76,11 @@ public class Interval {
         return quality;
     }
 
-    @MissingJavadoc
+
+    /**
+     * @return Returns the length of the interval in semitones. This method works for all intervals,
+     * including compound intervals.
+     * **/
     public int getDistance(){
         int valueCalc = this.value;
         int octaves = 0;
@@ -115,5 +120,28 @@ public class Interval {
             case QUADRUPLE_DIMINISHED -> {alt = perfectable ? -4 : -5;}
         }
         return value + alt;
+    }
+
+    /**
+     * Returns whether this interval is exactly equal to another interval. This means not only
+     * do these intervals have to equal enharmonically, their interval quality as well as their
+     * value must be equal. For example, an augmented fourth in this case will not return true
+     * when compared with a diminished fifth, as though they are enharmonically equal, they are
+     * not equal. This example however, will return true for {@link Interval#equalsEnharmonically(Interval)}.
+     * **/
+    @Override
+    public boolean equals(Interval interval) {
+        return this.value == interval.value && this.quality.equals(interval.quality);
+    }
+
+    /**
+     * Returns true as long as this interval is enharmonically equal to the interval compared. For a more
+     * accurate comparison, use {@link Interval#equals(Interval)}. This method compares the distance
+     * value between the two intervals. Therefore, this method is slightly less efficient, and should be
+     * considered before use in computationally intensive tasks.
+     */
+    @Override
+    public boolean equalsEnharmonically(Interval interval) {
+        return this.getDistance() == interval.getDistance();
     }
 }
