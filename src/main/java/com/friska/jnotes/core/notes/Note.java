@@ -269,8 +269,11 @@ public class Note {
             int compare = new IntervalCalculator(newBaseNote, this).getDistance();
             diff = compare - interval.getDistance();
         }
-
-        return newBaseNote.getAltered(diff);
+        try {
+            return newBaseNote.getAltered(diff);
+        }catch (AlterationException e){
+            throw new IntervalException("Cannot find " + interval.getFormattedName() + " above " + this.getSpelling() +", as this would require more than two sharps or flats on the note.");
+        }
     }
 
     @MissingJavadoc

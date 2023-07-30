@@ -1,6 +1,10 @@
 package com.friska.berkbot;
 
 import com.friska.berkbot.trainer.TrainerListener;
+import com.friska.jnotes.core.intervals.Interval;
+import com.friska.jnotes.core.intervals.IntervalQuality;
+import com.friska.jnotes.core.notes.Note;
+import com.friska.jnotes.core.notes.Notes;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 
@@ -16,7 +20,9 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        build();
+        Note note = Notes.G_DOUBLE_FLAT.setOctave(4);
+        note.getNoteAbove(new Interval(3, IntervalQuality.MINOR));
+        //build();
     }
 
     private static void build(){
