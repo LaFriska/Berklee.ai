@@ -40,7 +40,7 @@ public class IntervalIDQuestion extends TrainerQuestion {
     private final Interval interval;
 
     public IntervalIDQuestion(int difficulty){
-        super(difficulty);
+        super(difficulty, "interval");
         this.interval = getRandomInterval();
         this.upperNote = startingNote.getNoteAbove(interval);
     }
@@ -68,7 +68,7 @@ public class IntervalIDQuestion extends TrainerQuestion {
     public EmbedBuilder getQuestion(){
         EmbedBuilder eb = new EmbedBuilder();
 
-        eb.setTitle("Interval Question");
+        eb.setTitle("Interval Identification");
 
         StringBuilder sb = new StringBuilder();
 
@@ -78,12 +78,12 @@ public class IntervalIDQuestion extends TrainerQuestion {
             sb.append("What is the interval between ").append(startingNote.getSpelling()).append(" and ").append(upperNote.getSpelling()).append("?")
                 .append("\n\n").append("Answer: ||").append(interval.getFormattedName()).append("||");
         } else if(difficulty == 1){
-            eb.setColor(Color.PINK);
+            eb.setColor(Color.ORANGE);
             sb.append("Difficulty: Medium").append("\n\n");
             sb.append("What is the interval between ").append(startingNote.getSpelling(true)).append(" and ").append(upperNote.getSpelling(true)).append("?")
                     .append("\n\n").append("Answer: ||").append(interval.getFormattedName()).append("||");
         }else{
-            eb.setColor(Color.MAGENTA);
+            eb.setColor(Color.RED);
             sb.append("Difficulty: Hard").append("\n\n");
             sb.append("What is the interval between ").append(startingNote.getSpelling(true)).append(" and ").append(upperNote.getSpelling(true)).append("?")
                     .append("\n\n").append("Answer: ||").append(interval.getFormattedName()).append("||");
@@ -92,20 +92,6 @@ public class IntervalIDQuestion extends TrainerQuestion {
         eb.setDescription(sb.toString());
         eb.setFooter(Main.config.copyright());
         return eb;
-    }
-
-    public void sendQuestion(TextChannel channel, int difficulty){
-        sendQuestion(channel, difficulty, null);
-    }
-
-    public void sendQuestion(TextChannel channel, int difficulty, @Nullable ButtonInteractionEvent event){
-
-        LilyEmbedRequest request = new LilyEmbedRequest(channel, getQuestion(), this)
-                .addActionRow(net.dv8tion.jda.api.interactions.components.buttons.Button.secondary("interval easy", difficulty == 0 ? "Next" : "Easy"),
-                        net.dv8tion.jda.api.interactions.components.buttons.Button.secondary("interval med", difficulty == 1 ? "Next" : "Medium"),
-                        Button.secondary("interval hard", difficulty == 2 ? "Next" : "Hard"));
-        if(event != null) request.deleteDeferredReply(event);
-        LilyManager.INSTANCE.push(request);
     }
 
     @Override

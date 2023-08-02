@@ -1,17 +1,14 @@
 package com.friska.berkbot.trainer;
 
 import com.friska.berkbot.Main;
-import com.friska.berkbot.lilypond.LilyManager;
-import com.friska.berkbot.lilypond.req.LilyEmbedRequest;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-public class TrainerListener extends ListenerAdapter {
+public class TrainerListener extends ListenerAdapter { //TODO refactor
 
     protected boolean checkPrefix(MessageReceivedEvent event){
         if(event.getAuthor().isBot() || event.getAuthor().isSystem()) return false;
@@ -28,6 +25,11 @@ public class TrainerListener extends ListenerAdapter {
                 if(msg.contains("easy")) new IntervalIDQuestion(0).sendQuestion(event.getChannel().asTextChannel(), 0);
                 if(msg.contains("med") || msg.contains("medium")) new IntervalIDQuestion(1).sendQuestion(event.getChannel().asTextChannel(), 1);
                 if(msg.contains("hard") || msg.contains("difficult")) new IntervalIDQuestion(2).sendQuestion(event.getChannel().asTextChannel(), 2);
+            }
+            if(msgSplit.length < 5 && msg.contains("chord")){
+                if(msg.contains("easy")) new ChordIDQuestion(0).sendQuestion(event.getChannel().asTextChannel(), 0);
+                if(msg.contains("med") || msg.contains("medium")) new ChordIDQuestion(1).sendQuestion(event.getChannel().asTextChannel(), 1);
+                if(msg.contains("hard") || msg.contains("difficult")) new ChordIDQuestion(2).sendQuestion(event.getChannel().asTextChannel(), 2);
             }
         }
     }
@@ -50,6 +52,18 @@ public class TrainerListener extends ListenerAdapter {
                 case "interval hard" -> {
                     event.deferReply().setEphemeral(true).queue();
                     new IntervalIDQuestion(2).sendQuestion(c, 2, event);
+                }
+                case "chord easy" -> {
+                    event.deferReply().setEphemeral(true).queue();
+                    new ChordIDQuestion(0).sendQuestion(c, 0, event);
+                }
+                case "chord med" -> {
+                    event.deferReply().setEphemeral(true).queue();
+                    new ChordIDQuestion(1).sendQuestion(c, 1, event);
+                }
+                case "chord hard" -> {
+                    event.deferReply().setEphemeral(true).queue();
+                    new ChordIDQuestion(2).sendQuestion(c, 2, event);
                 }
             }
         }
