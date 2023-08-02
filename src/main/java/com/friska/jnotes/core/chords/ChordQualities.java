@@ -54,16 +54,6 @@ public class ChordQualities {
                 .extensionTone(7, IntervalQuality.MINOR);
     }
 
-    /**
-     * Also known as a minor seven flat-5 chord.
-     * **/
-    public final ChordQuality halfDiminished(){
-        return new ChordQuality("minor 7 flat-5", "-7b5")
-                .third( IntervalQuality.MAJOR)
-                .fifth( IntervalQuality.DIMINISHED)
-                .extensionTone(7, IntervalQuality.MINOR);
-    }
-
     public final ChordQuality minorMajorSeven(){
         return new ChordQuality("minor major 7", "-maj7")
                 .third(IntervalQuality.MINOR)

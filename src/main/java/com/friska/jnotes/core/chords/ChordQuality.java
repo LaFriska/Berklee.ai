@@ -33,21 +33,24 @@ public class ChordQuality { //TODO potentially implement ComparableElement
         return this;
     }
 
-    public ChordQuality sus4(){
-        chordIntervals[0] = new Interval(4, IntervalQuality.PERFECT);
-        return this;
-    }
-
-    public ChordQuality sus2(){
-        chordIntervals[0] = new Interval(2, IntervalQuality.MAJOR);
-        return this;
-    }
-
     public String getQualityName() {
         return qualityName;
     }
 
     public String getQualityNotation() {
         return qualityNotation;
+    }
+
+    public ChordQuality setInterval(int index, Interval interval){
+        this.chordIntervals[index] = interval;
+        return this;
+    }
+
+    public Interval[] getCompressedArray(){
+        ArrayList<Interval> arr = new ArrayList<>();
+        for (Interval chordInterval : chordIntervals) {
+            if(chordInterval != null) arr.add(chordInterval);
+        }
+        return arr.toArray(new Interval[0]);
     }
 }
