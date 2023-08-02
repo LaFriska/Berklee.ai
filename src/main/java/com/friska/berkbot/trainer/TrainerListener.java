@@ -25,9 +25,9 @@ public class TrainerListener extends ListenerAdapter {
             String msg = event.getMessage().getContentRaw();
             String[] msgSplit = msg.split(" ");
             if(msgSplit.length < 5 && msg.contains("interval")){
-                if(msg.contains("easy")) sendQuestion(event.getChannel().asTextChannel(), 0);
-                if(msg.contains("med") || msg.contains("medium")) sendQuestion(event.getChannel().asTextChannel(), 1);
-                if(msg.contains("hard") || msg.contains("difficult")) sendQuestion(event.getChannel().asTextChannel(), 2);
+                if(msg.contains("easy")) new IntervalIDQuestion(0).sendQuestion(event.getChannel().asTextChannel(), 0);
+                if(msg.contains("med") || msg.contains("medium")) new IntervalIDQuestion(1).sendQuestion(event.getChannel().asTextChannel(), 1);
+                if(msg.contains("hard") || msg.contains("difficult")) new IntervalIDQuestion(2).sendQuestion(event.getChannel().asTextChannel(), 2);
             }
         }
     }
@@ -38,31 +38,20 @@ public class TrainerListener extends ListenerAdapter {
             Button button = event.getButton();
             String id = button.getId();
             TextChannel c = event.getChannel().asTextChannel();
-            if(button.getId().equals("interval easy")) {
-                event.deferReply().setEphemeral(true).queue();
-                sendQuestion(c, 0, event);
-            }else if(button.getId().equals("interval med")) {
-                event.deferReply().setEphemeral(true).queue();
-                sendQuestion(c, 1, event);
-            }else if(button.getId().equals("interval hard")) {
-                event.deferReply().setEphemeral(true).queue();
-                sendQuestion(c, 2, event);
+            switch (id) {
+                case "interval easy" -> {
+                    event.deferReply().setEphemeral(true).queue();
+                    new IntervalIDQuestion(0).sendQuestion(c, 0, event);
+                }
+                case "interval med" -> {
+                    event.deferReply().setEphemeral(true).queue();
+                    new IntervalIDQuestion(1).sendQuestion(c, 1, event);
+                }
+                case "interval hard" -> {
+                    event.deferReply().setEphemeral(true).queue();
+                    new IntervalIDQuestion(2).sendQuestion(c, 2, event);
+                }
             }
         }
-    }
-
-    private void sendQuestion(TextChannel channel, int difficulty){
-        sendQuestion(channel, difficulty, null);
-    }
-
-    private void sendQuestion(TextChannel channel, int difficulty, @Nullable ButtonInteractionEvent event){
-        IntervalIDQuestion question = new IntervalIDQuestion(difficulty);
-
-        LilyEmbedRequest request = new LilyEmbedRequest(channel, question.getQuestion(), question)
-                .addActionRow(Button.secondary("interval easy", difficulty == 0 ? "Next" : "Easy"),
-                        Button.secondary("interval med", difficulty == 1 ? "Next" : "Medium"),
-                        Button.secondary("interval hard", difficulty == 2 ? "Next" : "Hard"));
-        if(event != null) request.deleteDeferredReply(event);
-        LilyManager.INSTANCE.push(request);
     }
 }

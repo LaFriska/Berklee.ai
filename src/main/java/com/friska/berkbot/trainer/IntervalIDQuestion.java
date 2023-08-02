@@ -1,6 +1,8 @@
 package com.friska.berkbot.trainer;
 
 import com.friska.berkbot.Main;
+import com.friska.berkbot.lilypond.LilyManager;
+import com.friska.berkbot.lilypond.req.LilyEmbedRequest;
 import com.friska.jnotes.core.LilyCode;
 import com.friska.jnotes.core.intervals.Interval;
 import com.friska.jnotes.core.intervals.IntervalQuality;
@@ -8,13 +10,15 @@ import com.friska.jnotes.core.notes.Alteration;
 import com.friska.jnotes.core.notes.BaseNote;
 import com.friska.jnotes.core.notes.Note;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
+import net.dv8tion.jda.api.interactions.components.buttons.Button;
+import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
 import java.util.Random;
 
-public class IntervalIDQuestion implements LilyCode {
-
-    private final Random r = new Random();
+public class IntervalIDQuestion extends TrainerQuestion {
 
     private static final Interval[] easy = new Interval[]{
             new Interval(1, IntervalQuality.PERFECT),
@@ -31,30 +35,14 @@ public class IntervalIDQuestion implements LilyCode {
             new Interval(7, IntervalQuality.MINOR),
             new Interval(7, IntervalQuality.MAJOR)
     };
-
-    private final int difficulty;
-
-    private final Note startingNote;
     private final Note upperNote;
 
     private final Interval interval;
 
     public IntervalIDQuestion(int difficulty){
-        this.difficulty = difficulty;
-        this.startingNote = getRandomStartingNote();
+        super(difficulty);
         this.interval = getRandomInterval();
         this.upperNote = startingNote.getNoteAbove(interval);
-    }
-
-    private Note getRandomStartingNote(){
-
-        int oct = r.nextInt(2) + 3;
-
-        Note note = new Note(BaseNote.getNoteBaseFromSolfegge(r.nextInt(7) + 1),
-               difficulty == 1 ? Alteration.get(r.nextInt(3) - 1) :
-                       difficulty == 0 ? Alteration.NATURAL :Alteration.get(r.nextInt(5) - 2)
-        );
-        return note.setOctave(oct);
     }
 
     private Interval getRandomInterval(){
@@ -76,6 +64,7 @@ public class IntervalIDQuestion implements LilyCode {
         }
     }
 
+    @Override
     public EmbedBuilder getQuestion(){
         EmbedBuilder eb = new EmbedBuilder();
 
@@ -103,6 +92,20 @@ public class IntervalIDQuestion implements LilyCode {
         eb.setDescription(sb.toString());
         eb.setFooter(Main.config.copyright());
         return eb;
+    }
+
+    public void sendQuestion(TextChannel channel, int difficulty){
+        sendQuestion(channel, difficulty, null);
+    }
+
+    public void sendQuestion(TextChannel channel, int difficulty, @Nullable ButtonInteractionEvent event){
+
+        LilyEmbedRequest request = new LilyEmbedRequest(channel, getQuestion(), this)
+                .addActionRow(net.dv8tion.jda.api.interactions.components.buttons.Button.secondary("interval easy", difficulty == 0 ? "Next" : "Easy"),
+                        net.dv8tion.jda.api.interactions.components.buttons.Button.secondary("interval med", difficulty == 1 ? "Next" : "Medium"),
+                        Button.secondary("interval hard", difficulty == 2 ? "Next" : "Hard"));
+        if(event != null) request.deleteDeferredReply(event);
+        LilyManager.INSTANCE.push(request);
     }
 
     @Override
