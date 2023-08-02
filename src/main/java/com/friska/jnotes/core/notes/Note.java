@@ -1,10 +1,10 @@
 package com.friska.jnotes.core.notes;
 
 import com.friska.jnotes.core.ComparableElement;
+import com.friska.jnotes.core.LilyCode;
 import com.friska.jnotes.core.intervals.Interval;
 import com.friska.jnotes.core.intervals.IntervalCalculator;
 import com.friska.jnotes.core.intervals.IntervalQuality;
-import com.friska.jnotes.debug.MissingJavadoc;
 import com.friska.jnotes.exceptions.AlterationException;
 import com.friska.jnotes.exceptions.BaseNoteException;
 import com.friska.jnotes.exceptions.IntervalException;
@@ -14,7 +14,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 
-public class Note implements ComparableElement<Note> {
+public class Note implements ComparableElement<Note>, LilyCode {
 
     private final BaseNote baseNote;
     private Alteration alteration;
@@ -334,7 +334,8 @@ public class Note implements ComparableElement<Note> {
     /**
      * Gets the Lilypond format of this note.
      * **/
-    public String getLily(){
+    @Override
+    public String getLilyCode(){
         int oct;
         if(isOctaveAbstract()) oct = 3;
         else oct = getOctaveValue();

@@ -29,7 +29,7 @@ public class ChordQuality { //TODO potentially implement ComparableElement
     }
 
     public ChordQuality extensionTone(int value, @NotNull IntervalQuality quality){
-        chordIntervals[1] = new Interval(value, quality);
+        chordIntervals[2] = new Interval(value, quality);
         return this;
     }
 

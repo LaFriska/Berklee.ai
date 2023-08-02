@@ -1,6 +1,7 @@
 package com.friska.berkbot.trainer;
 
 import com.friska.berkbot.Main;
+import com.friska.jnotes.core.LilyCode;
 import com.friska.jnotes.core.intervals.Interval;
 import com.friska.jnotes.core.intervals.IntervalQuality;
 import com.friska.jnotes.core.notes.Alteration;
@@ -11,7 +12,7 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import java.awt.*;
 import java.util.Random;
 
-public class IntervalQuestion {
+public class IntervalQuestion implements LilyCode {
 
     private final Random r = new Random();
 
@@ -105,8 +106,8 @@ public class IntervalQuestion {
         return eb;
     }
 
+    @Override
     public String getLilyCode(){
-        return "\\version \"" + Main.config.lily_version() + "\"" + "\n\n" +
-                "{ <" + startingNote.getLily() + " " + upperNote.getLily() + "> }";
+        return getLily(startingNote, upperNote);
     }
 }
