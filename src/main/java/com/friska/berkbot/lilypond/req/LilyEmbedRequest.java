@@ -1,6 +1,7 @@
 package com.friska.berkbot.lilypond.req;
 
 import com.friska.berkbot.Main;
+import com.friska.jnotes.core.LilyCode;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.interactions.components.ItemComponent;
@@ -17,8 +18,8 @@ public class LilyEmbedRequest extends LilyRequest{
 
     TextChannel channel;
 
-    public LilyEmbedRequest(TextChannel channel, EmbedBuilder embedBuilder, String lilycode){
-        super(lilycode);
+    public <T extends LilyCode> LilyEmbedRequest(TextChannel channel, EmbedBuilder embedBuilder, T lilyObj){
+        super(lilyObj);
         this.embedBuilder = embedBuilder;
         this.channel = channel;
     }

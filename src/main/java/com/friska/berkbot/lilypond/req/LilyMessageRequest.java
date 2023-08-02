@@ -1,5 +1,6 @@
 package com.friska.berkbot.lilypond.req;
 
+import com.friska.jnotes.core.LilyCode;
 import net.dv8tion.jda.api.requests.restaction.MessageCreateAction;
 import net.dv8tion.jda.api.utils.FileUpload;
 
@@ -7,10 +8,10 @@ import java.io.File;
 
 public class LilyMessageRequest extends LilyRequest{
 
-    private MessageCreateAction messageCreateAction;
+    private final MessageCreateAction messageCreateAction;
 
-    public LilyMessageRequest(MessageCreateAction messageCreateAction, String lilycode){
-        super(lilycode);
+    public <T extends LilyCode> LilyMessageRequest(MessageCreateAction messageCreateAction, T lilyObj){
+        super(lilyObj);
         this.messageCreateAction = messageCreateAction;
     }
 

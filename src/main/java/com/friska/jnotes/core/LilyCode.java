@@ -8,7 +8,7 @@ public interface LilyCode {
     String VERS = Main.config.lily_version();
     String getLilyCode();
 
-    default String getLily(Note... notes){
+    default String getLilyFromNote(Note... notes){
         StringBuilder sb = new StringBuilder();
         sb.append("\\version \"").append(VERS).append("\"").append("\n\n").append("{ <");
         for (Note note : notes) {

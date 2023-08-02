@@ -56,9 +56,9 @@ public class TrainerListener extends ListenerAdapter {
     }
 
     private void sendQuestion(TextChannel channel, int difficulty, @Nullable ButtonInteractionEvent event){
-        IntervalQuestion question = new IntervalQuestion(difficulty);
+        IntervalIDQuestion question = new IntervalIDQuestion(difficulty);
 
-        LilyEmbedRequest request = new LilyEmbedRequest(channel, question.getQuestion(), question.getLilyCode())
+        LilyEmbedRequest request = new LilyEmbedRequest(channel, question.getQuestion(), question)
                 .addActionRow(Button.secondary("interval easy", difficulty == 0 ? "Next" : "Easy"),
                         Button.secondary("interval med", difficulty == 1 ? "Next" : "Medium"),
                         Button.secondary("interval hard", difficulty == 2 ? "Next" : "Hard"));

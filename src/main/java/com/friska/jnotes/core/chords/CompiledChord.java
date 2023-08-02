@@ -13,6 +13,6 @@ public record CompiledChord(String spelling, Note[] notes) implements LilyCode {
     }
     @Override
     public String getLilyCode() {
-        return getLily(notes);
+        return getLilyFromNote(notes);
     }
 }

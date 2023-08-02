@@ -28,14 +28,14 @@ public class LilyProcessor{
             File file = new File(PATH, "workspace.ly");
             if (!file.exists()){
                 if(file.createNewFile()){
-                    return receiveRequest(request.getLilycode(), file);
+                    return receiveRequest(request.getLilyCode(), file);
                 }else{
                     System.err.println("Lily: An issue occurred trying to create files in the lilypond workspace.");
                     free();
                     return false;
                 }
             }else{
-                return receiveRequest(request.getLilycode(), file);
+                return receiveRequest(request.getLilyCode(), file);
             }
         }catch (Exception e){
             System.err.println("Lily: Unable to process lilypond procedure.");

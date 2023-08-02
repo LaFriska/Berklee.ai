@@ -12,10 +12,9 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import java.awt.*;
 import java.util.Random;
 
-public class IntervalQuestion implements LilyCode {
+public class IntervalIDQuestion implements LilyCode {
 
     private final Random r = new Random();
-
 
     private static final Interval[] easy = new Interval[]{
             new Interval(1, IntervalQuality.PERFECT),
@@ -40,7 +39,7 @@ public class IntervalQuestion implements LilyCode {
 
     private final Interval interval;
 
-    public IntervalQuestion(int difficulty){
+    public IntervalIDQuestion(int difficulty){
         this.difficulty = difficulty;
         this.startingNote = getRandomStartingNote();
         this.interval = getRandomInterval();
@@ -108,6 +107,6 @@ public class IntervalQuestion implements LilyCode {
 
     @Override
     public String getLilyCode(){
-        return getLily(startingNote, upperNote);
+        return getLilyFromNote(startingNote, upperNote);
     }
 }

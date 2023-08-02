@@ -1,21 +1,23 @@
 package com.friska.berkbot.lilypond.req;
 
+import com.friska.jnotes.core.LilyCode;
 import net.dv8tion.jda.api.events.interaction.component.GenericComponentInteractionCreateEvent;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 
-public abstract class LilyRequest {
+public abstract class LilyRequest implements LilyCode {
 
     @Nullable
     protected GenericComponentInteractionCreateEvent event = null;
     protected String lilycode;
     protected File image;
-    public LilyRequest(String lilycode){
-        this.lilycode = lilycode;
+    public <T extends LilyCode> LilyRequest(T lilyObj){
+        this.lilycode = lilyObj.getLilyCode();
     }
 
-    public String getLilycode() {
+    @Override
+    public String getLilyCode() {
         return lilycode;
     }
 
