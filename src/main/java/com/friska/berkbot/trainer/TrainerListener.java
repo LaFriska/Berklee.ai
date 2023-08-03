@@ -8,7 +8,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import org.jetbrains.annotations.NotNull;
 
-public class TrainerListener extends ListenerAdapter { //TODO refactor
+public class TrainerListener extends ListenerAdapter {
 
     protected boolean checkPrefix(MessageReceivedEvent event){
         if(event.getAuthor().isBot() || event.getAuthor().isSystem()) return false;
@@ -37,34 +37,17 @@ public class TrainerListener extends ListenerAdapter { //TODO refactor
     @Override
     public void onButtonInteraction(ButtonInteractionEvent event) {
         if(event.getMessage().getAuthor().getId().equals(Main.config.botid())){
+            event.deferReply().setEphemeral(true).queue();
             Button button = event.getButton();
             String id = button.getId();
             TextChannel c = event.getChannel().asTextChannel();
             switch (id) {
-                case "interval easy" -> {
-                    event.deferReply().setEphemeral(true).queue();
-                    new IntervalIDQuestion(0).sendQuestion(c, 0, event);
-                }
-                case "interval med" -> {
-                    event.deferReply().setEphemeral(true).queue();
-                    new IntervalIDQuestion(1).sendQuestion(c, 1, event);
-                }
-                case "interval hard" -> {
-                    event.deferReply().setEphemeral(true).queue();
-                    new IntervalIDQuestion(2).sendQuestion(c, 2, event);
-                }
-                case "chord easy" -> {
-                    event.deferReply().setEphemeral(true).queue();
-                    new ChordIDQuestion(0).sendQuestion(c, 0, event);
-                }
-                case "chord med" -> {
-                    event.deferReply().setEphemeral(true).queue();
-                    new ChordIDQuestion(1).sendQuestion(c, 1, event);
-                }
-                case "chord hard" -> {
-                    event.deferReply().setEphemeral(true).queue();
-                    new ChordIDQuestion(2).sendQuestion(c, 2, event);
-                }
+                case "interval easy" -> new IntervalIDQuestion(0).sendQuestion(c, 0, event);
+                case "interval med" -> new IntervalIDQuestion(1).sendQuestion(c, 1, event);
+                case "interval hard" -> new IntervalIDQuestion(2).sendQuestion(c, 2, event);
+                case "chord easy" -> new ChordIDQuestion(0).sendQuestion(c, 0, event);
+                case "chord med" -> new ChordIDQuestion(1).sendQuestion(c, 1, event);
+                case "chord hard" -> new ChordIDQuestion(2).sendQuestion(c, 2, event);
             }
         }
     }
