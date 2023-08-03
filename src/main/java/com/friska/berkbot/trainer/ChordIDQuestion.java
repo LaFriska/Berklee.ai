@@ -5,6 +5,7 @@ import com.friska.jnotes.core.chords.Chord;
 import com.friska.jnotes.core.chords.ChordQualities;
 import com.friska.jnotes.core.chords.ChordQuality;
 import com.friska.jnotes.core.chords.CompiledChord;
+import com.friska.jnotes.core.chords.enums.Tension;
 import com.friska.jnotes.core.notes.Alteration;
 import com.friska.jnotes.core.notes.BaseNote;
 import com.friska.jnotes.core.notes.Note;
@@ -37,17 +38,25 @@ public class ChordIDQuestion extends TrainerQuestion{
             if(r.nextInt(101) <= 15) chord.sus4();
             if(r.nextInt(101) <= 15) chord.sus2();
         }
-        //TODO tensions
+
+        if(difficulty >= 1){
+            Tension[] tension = getRandomTension(quality);
+            chord.tensions(tension);
+        }
+
         return chord;
     }
 
     private ChordQuality getRandomQuality(){
         if(difficulty == 0){
-            switch (r.nextInt(4)){
+            switch (r.nextInt(8)){
                 case 0 -> {return ChordQualities.maj();}
                 case 1 -> {return ChordQualities.min();}
                 case 2 -> {return ChordQualities.dim();}
                 case 3 -> {return ChordQualities.aug();}
+                case 4 -> {return ChordQualities.dom7();}
+                case 5 -> {return ChordQualities.maj7();}
+                case 6,7 -> {return ChordQualities.min7();}
             }
         }else{
             switch (r.nextInt(13)){
@@ -76,6 +85,58 @@ public class ChordIDQuestion extends TrainerQuestion{
                 difficulty >= 1 ? Alteration.get(r.nextInt(3) - 1) : Alteration.NATURAL
         );
         return note.setOctave(oct);
+    }
+
+    private Tension[] getRandomTension(ChordQuality quality){
+        Tension[] ninths;
+        Tension[] elevenths;
+        Tension[] thirteenths;
+        int nums = 0;
+        if(difficulty == 1){
+
+            if(r.nextInt(100) <= 29) nums++;
+
+            ninths = new Tension[]{
+                    Tension.T9,
+                    Tension.Tb9
+            };
+            elevenths = new Tension[]{
+                    Tension.T11
+            };
+            thirteenths = new Tension[]{
+                    Tension.T13
+            };
+
+        }else{
+
+            int nextI = r.nextInt(100);
+
+            if(nextI <= 75) nums++;
+            if(nextI <= 50) nums++;
+            if(nextI <= 25) nums++;
+
+            ninths = new Tension[]{
+                    Tension.T9,
+                    Tension.Tb9,
+                    Tension.Ts9
+            };
+            elevenths = new Tension[]{
+                    Tension.T11,
+                    Tension.Ts11
+            };
+            thirteenths = new Tension[]{
+                    Tension.T13,
+                    Tension.Tb13
+            };
+        }
+
+        Tension[] res = new Tension[nums];
+        for (int i = 0; i < res.length; i++) {
+            if(i == 0) res[i] = ninths[r.nextInt(ninths.length)];
+            if(i == 1) res[i] = elevenths[r.nextInt(elevenths.length)];
+            if(i == 2) res[i] = thirteenths[r.nextInt(thirteenths.length)];
+        }
+        return res;
     }
 
     @Override

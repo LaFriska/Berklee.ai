@@ -131,7 +131,7 @@ public class Chord {
         if(tensions.size() != 0) {
             sb.append("(");
             for(Tension tension : tensions) {
-                sb.append(tension.notation);
+                sb.append(tension.notation).append(" ");
             }
             sb.append(")");
         }
