@@ -156,6 +156,9 @@ public class Note implements ComparableElement<Note>, LilyCode {
                 && note.getAlteration() == this.getAlteration();
     }
 
+    /**
+     * Makes the octave abstract.
+     */
     public Note abstractOctave(){
         this.octaveValue = -1;
         return this;
