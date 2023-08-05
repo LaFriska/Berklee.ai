@@ -10,7 +10,7 @@ import com.friska.jnotes.test.testutil.Suite;
 public class NotesTest {
 
     protected static void comparison(){
-        Main.test.addSuite(
+        TestMain.test.addSuite(
                 new Suite("Notes.Comparison.Enharmonics").addAssertions(
                         new Assertion<>(true, Notes.A.equalsEnharmonically(Notes.B_DOUBLE_FLAT)),
                         new Assertion<>(true, Notes.C.equalsEnharmonically(Notes.D_DOUBLE_FLAT)),
@@ -42,7 +42,7 @@ public class NotesTest {
                 )
         );
 
-        Main.test.addSuite(
+        TestMain.test.addSuite(
                 new Suite("Notes.Comparison.Equivalency").addAssertions(
                         new Assertion<>(true, Notes.A.equals(new Note(BaseNote.A))),
                         new Assertion<>(true, Notes.B_DOUBLE_SHARP.equals(new Note(BaseNote.B, Alteration.DOUBLE_SHARP))),
@@ -56,7 +56,7 @@ public class NotesTest {
                 )
         );
 
-        Main.test.addSuite(
+        TestMain.test.addSuite(
                 new Suite("Notes.Comparison.NoteValue").addAssertions(
                         new Assertion<>(1, Notes.C.getValue()),
                         new Assertion<>(4, Notes.E_FLAT.getValue()),
@@ -71,7 +71,7 @@ public class NotesTest {
     }
 
     protected static void pitch(){
-        Main.test.addSuite(
+        TestMain.test.addSuite(
                 new Suite("Notes.Pitch.OctaveValue").addAssertions(
                         new Assertion<>(440, Math.round(Notes.A.createMutableClone().setOctave(4).getHertz())),
                         new Assertion<>(33, Math.round(Notes.C.createMutableClone().setOctave(1).getHertz())),
@@ -87,7 +87,7 @@ public class NotesTest {
                 )
         );
 
-        Main.test.addSuite(
+        TestMain.test.addSuite(
                 new Suite("Notes.Pitch.Spelling").addAssertions(
                         new Assertion<>("C♯", Notes.C_SHARP.getSpelling()),
                         new Assertion<>("D\uD834\uDD2B", Notes.D_DOUBLE_FLAT.getSpelling()),
@@ -99,7 +99,7 @@ public class NotesTest {
     }
 
     protected static void misc(){
-        Main.test.addSuites(
+        TestMain.test.addSuites(
                 new Suite("Notes.Misc.BaseNotes").addAssertions(
                         new Assertion<>(1, Notes.A.setOctave(0).getBaseNoteLabel()),
                         new Assertion<>(2, Notes.B.setOctave(0).getBaseNoteLabel()),

@@ -10,7 +10,7 @@ import com.friska.jnotes.test.testutil.Suite;
 public class IntervalsTest {
     protected static void values(){
 
-        Main.test.addSuites(
+        TestMain.test.addSuites(
                 new Suite("Intervals.Values.Values").addAssertions(
                         new Assertion<>(8, new IntervalCalculator(Notes.C.setOctave(3), Notes.C.setOctave(4)).getValue()),
                         new Assertion<>(8, new IntervalCalculator(Notes.E.setOctave(3), Notes.E_FLAT.setOctave(4)).getValue()),
@@ -84,7 +84,7 @@ public class IntervalsTest {
     }
 
     protected static void noteFinder(){
-        Main.test.addSuites(
+        TestMain.test.addSuites(
                 new Suite("Intervals.Values.NoteFinder").addAssertions(
                         new Assertion<>(Notes.E.setOctave(4).getSpelling(true),
                                 Notes.C.setOctave(4).getNoteAbove(new Interval(3, IntervalQuality.MAJOR)).getSpelling(true)),

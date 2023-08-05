@@ -13,7 +13,7 @@ public class ChordTest {
 
 
     protected static void tones(){
-        Main.test.addSuite(new Suite("Chord.Tone.Notes").addAssertions(
+        TestMain.test.addSuite(new Suite("Chord.Tone.Notes").addAssertions(
                 new Assertion<>("A4 C5 E5", getAllNotes(new Chord(Notes.A.setOctave(4), ChordQualities.min()).compile())),
                 new Assertion<>("A4 C#5 E5 G#5", getAllNotes(new Chord(Notes.A.setOctave(4), ChordQualities.maj7()).compile())),
                 new Assertion<>("Db3 Fb3 Ab3 Cb4 Eb4", getAllNotes(new Chord(Notes.D_FLAT.setOctave(3), ChordQualities.min7()).tension(Tension.T9).compile())),
@@ -32,11 +32,7 @@ public class ChordTest {
         for (int i = 1; i < notes.length; i++) {
             sb.append(" ").append(notes[i].getSpelling(true));
         }
-        return sb.toString()
-                .replaceAll("♭", "b")
-                .replaceAll("♯", "#")
-                .replaceAll("\uD834\uDD2A", "x")
-                .replaceAll("\uD834\uDD2B", "bb");
+        return TestMain.getReplacedAccidentals(sb.toString());
     }
 
 }
