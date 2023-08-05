@@ -10,7 +10,8 @@ public class TestMain {
     public static final Test test = new Test();
 
     public static void main(String[] args) {
-        System.out.println(new Key(Notes.B_FLAT, KeyQualities.harmonicMinor()).getLilyCode());
+        //System.out.println(new Key(Notes.B_FLAT, KeyQualities.harmonicMinor()).getLilyCode());
+        run();
     }
     private static void run(){
         NotesTest.comparison();

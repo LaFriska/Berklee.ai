@@ -26,7 +26,10 @@ public class KeyTest {
                 new Assertion<>("F# G# A# B C# D# E", getTestString(Notes.F_SHARP, KeyQualities.mixolydian())),
                 new Assertion<>("D Eb F G A Bb C", getTestString(Notes.D, KeyQualities.phrygian())),
                 new Assertion<>("E F G A B C D", getTestString(Notes.E, KeyQualities.phrygian())),
-                new Assertion<>("Eb F Gb Ab Bb Cb D", getTestString(Notes.E_FLAT, KeyQualities.harmonicMinor()))
+                new Assertion<>("Eb F Gb Ab Bb Cb D", getTestString(Notes.E_FLAT, KeyQualities.harmonicMinor())),
+                new Assertion<>("C D E F# G A Bb", getTestString(Notes.C, KeyQualities.lydianDominant())),
+                new Assertion<>("Eb F G A Bb C Db", getTestString(Notes.E_FLAT, KeyQualities.lydianDominant())),
+                new Assertion<>("D E F# G# A B C", getTestString(Notes.D, KeyQualities.lydianDominant()))
         ));
     }
 

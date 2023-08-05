@@ -30,6 +30,9 @@ public class KeyQualities {
     public static KeyQuality mixolydian(){
         return new KeyQuality("mixolydian", M, M, m, M, M, m);
     }
+    public static KeyQuality lydianDominant(){
+        return new KeyQuality("lydian b7", M, M, M, m, M, m);
+    }
 
     public static KeyQuality lydian(){
         return new KeyQuality("lydian", M, M, M, m, M, M);
