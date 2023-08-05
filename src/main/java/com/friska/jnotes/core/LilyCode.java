@@ -4,13 +4,12 @@ import com.friska.berkbot.Main;
 import com.friska.jnotes.core.notes.Note;
 
 public interface LilyCode {
-
-    String VERS = Main.config.lily_version();
+    String VERSION_TAG = "\\version \"" + Main.config.lily_version() +"\"" + "\n\n";
     String getLilyCode();
 
     default String getLilyFromNote(Note... notes){
-        StringBuilder sb = new StringBuilder();
-        sb.append("\\version \"").append(VERS).append("\"").append("\n\n").append("{ <");
+        StringBuilder sb = new StringBuilder(VERSION_TAG);
+        sb.append("{ <");
         for (Note note : notes) {
             sb.append(note.getLilyCode()).append(" ");
         }

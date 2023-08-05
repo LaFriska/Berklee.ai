@@ -1,5 +1,8 @@
 package com.friska.jnotes.test;
 
+import com.friska.jnotes.core.keys.Key;
+import com.friska.jnotes.core.keys.KeyQualities;
+import com.friska.jnotes.core.notes.Notes;
 import com.friska.jnotes.test.testutil.Test;
 
 public class TestMain {
@@ -7,7 +10,7 @@ public class TestMain {
     public static final Test test = new Test();
 
     public static void main(String[] args) {
-        run();
+        System.out.println(new Key(Notes.B_FLAT, KeyQualities.harmonicMinor()).getLilyCode());
     }
     private static void run(){
         NotesTest.comparison();
