@@ -13,7 +13,7 @@ public class KeyQualities {
         return new KeyQuality("major", M, M, m, M, M, M);
     }
 
-    public static KeyQuality naturalMinor(){
+    public static KeyQuality minor(){
         return new KeyQuality("minor", M, m, M, M, m, M);
     }
 
