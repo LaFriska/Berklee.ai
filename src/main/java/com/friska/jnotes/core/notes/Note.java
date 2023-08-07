@@ -266,12 +266,10 @@ public class Note implements ComparableElement<Note>, LilyCode {
     /**
      * Returns the note above of the given interval object. This method will only work if the octave is not abstract, and
      * it will throw an exception if otherwise. If the interval above the note requires a note with more than two flats or sharps
-     * (e.g. a minor third above G double flat would be B triple flat), an exception will be thrown and should be caught accordingly
-     * when trying to use this method iteratively. It is also adviced to use {@link Note#getPossibleIntervalQualitiesAbove(int, IntervalQuality...)}
-     * to find possible intervals above this note before calling this method in order to prevent this issue.
+     * (e.g. a minor third above G double flat would be B triple flat), a different interval enharmonically equal to the interval
+     * parsed through the parameter will be found, and then used.
      * **/
-    public Note getNoteAbove(Interval interval){ //TODO update javadoc if new changes made
-        //TODO add test suite to test the new module
+    public Note getNoteAbove(Interval interval){
         if(this.isOctaveAbstract()) throw new IntervalException("Octave must not be abstract for this method to run.");
         int baseNoteVal = this.getBaseNoteLabel() + interval.getValue() - 1;
         Note newBaseNote = BaseNote.get(baseNoteVal);

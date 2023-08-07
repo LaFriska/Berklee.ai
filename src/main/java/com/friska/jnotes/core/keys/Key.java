@@ -31,11 +31,7 @@ public class Key implements LilyCode {
         Interval curr;
         for(int i = 1; i < result.length; i++){
             curr = quality.getNext();
-            try {
-                result[i] = result[i - 1].getNoteAbove(curr);
-            }catch (IntervalException e){
-                //TODO
-            }
+            result[i] = result[i - 1].getNoteAbove(curr);
             result[i - 1].abstractOctave();
         }
         result[result.length - 1].abstractOctave();
