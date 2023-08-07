@@ -1,22 +1,12 @@
 package com.friska.berkbot.trainer;
 
 import com.friska.berkbot.Main;
-import com.friska.berkbot.lilypond.LilyManager;
-import com.friska.berkbot.lilypond.req.LilyEmbedRequest;
-import com.friska.jnotes.core.LilyCode;
 import com.friska.jnotes.core.intervals.Interval;
 import com.friska.jnotes.core.intervals.IntervalQuality;
-import com.friska.jnotes.core.notes.Alteration;
-import com.friska.jnotes.core.notes.BaseNote;
 import com.friska.jnotes.core.notes.Note;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
-import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
-import net.dv8tion.jda.api.interactions.components.buttons.Button;
-import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
-import java.util.Random;
 
 public class IntervalIDQuestion extends TrainerQuestion {
 

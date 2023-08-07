@@ -30,9 +30,6 @@ public class KeyQualities {
     public static KeyQuality mixolydian(){
         return new KeyQuality("mixolydian", M, M, m, M, M, m);
     }
-    public static KeyQuality lydianDominant(){
-        return new KeyQuality("lydian b7", M, M, M, m, M, m);
-    }
 
     public static KeyQuality lydian(){
         return new KeyQuality("lydian", M, M, M, m, M, M);
@@ -49,4 +46,17 @@ public class KeyQualities {
     public static KeyQuality locrian(){
         return new KeyQuality("locrian", m, M, M, m, M, M);
     }
+
+    public static KeyQuality lydianDominant(){
+        return new KeyQuality("lydian b7", M, M, M, m, M, m);
+    }
+
+    public static KeyQuality altered(){
+        return new KeyQuality("altered", m, M, m, M, M, M);
+    }
+
+    public static KeyQuality diminished(){
+        return new KeyQuality("symmetric diminished", m, M, m, M, m, M, m);
+    }
+
 }

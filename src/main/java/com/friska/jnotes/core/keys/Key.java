@@ -1,7 +1,9 @@
 package com.friska.jnotes.core.keys;
 
 import com.friska.jnotes.core.LilyCode;
+import com.friska.jnotes.core.intervals.Interval;
 import com.friska.jnotes.core.notes.Note;
+import com.friska.jnotes.exceptions.IntervalException;
 
 public class Key implements LilyCode {
 
@@ -26,8 +28,14 @@ public class Key implements LilyCode {
         Note rootedRoot = root.createMutableClone().setOctave(1);
         Note[] result = new Note[quality.length() + 1];
         result[0] = rootedRoot;
+        Interval curr;
         for(int i = 1; i < result.length; i++){
-            result[i] = result[i - 1].getNoteAbove(quality.getNext());
+            curr = quality.getNext();
+            try {
+                result[i] = result[i - 1].getNoteAbove(curr);
+            }catch (IntervalException e){
+                //TODO
+            }
             result[i - 1].abstractOctave();
         }
         result[result.length - 1].abstractOctave();

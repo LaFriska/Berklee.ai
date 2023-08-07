@@ -270,9 +270,23 @@ public class Note implements ComparableElement<Note>, LilyCode {
      * when trying to use this method iteratively. It is also adviced to use {@link Note#getPossibleIntervalQualitiesAbove(int, IntervalQuality...)}
      * to find possible intervals above this note before calling this method in order to prevent this issue.
      * **/
-    public Note getNoteAbove(Interval interval){
+    public Note getNoteAbove(Interval interval){ //TODO update javadoc if new changes made
+        //TODO add test suite to test the new module
         if(this.isOctaveAbstract()) throw new IntervalException("Octave must not be abstract for this method to run.");
-        Note newBaseNote = BaseNote.get(this.getBaseNoteLabel() + interval.getValue() - 1);
+        int baseNoteVal = this.getBaseNoteLabel() + interval.getValue() - 1;
+        Note newBaseNote = BaseNote.get(baseNoteVal);
+        int diff = getDiff(interval, newBaseNote);
+
+        while(diff < -2 || diff > 2){
+            if(diff < -2) baseNoteVal--;
+            else baseNoteVal++;
+            newBaseNote = BaseNote.get(baseNoteVal);
+            diff = getDiff(interval, newBaseNote);
+        }
+        return newBaseNote.getAltered(diff);
+    }
+
+    private int getDiff(Interval interval, Note newBaseNote){
         int diff;
         try {
             int compare = new IntervalCalculator(this, newBaseNote).getDistance();
@@ -281,11 +295,7 @@ public class Note implements ComparableElement<Note>, LilyCode {
             int compare = new IntervalCalculator(newBaseNote, this).getDistance();
             diff = compare - interval.getDistance();
         }
-        try {
-            return newBaseNote.getAltered(diff);
-        }catch (AlterationException e){
-            throw new IntervalException("Cannot find " + interval.getFormattedName() + " above " + this.getSpelling() +", as this would require more than two sharps or flats on the note.");
-        }
+        return diff;
     }
 
     /**
@@ -295,7 +305,6 @@ public class Note implements ComparableElement<Note>, LilyCode {
      * many flats and sharps as accidentals as possible.
      * **/
     public Interval[] getPossibleIntervalQualitiesAbove(int intervalValue, IntervalQuality... omitted){
-
 
         ArrayList<Interval> IQArrayList = new ArrayList<>();
 

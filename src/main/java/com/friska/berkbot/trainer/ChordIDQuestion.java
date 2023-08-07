@@ -28,7 +28,7 @@ public class ChordIDQuestion extends TrainerQuestion{
         ChordQuality quality = getRandomQuality();
         String notation = quality.getQualityNotation();
         Chord chord = new Chord(startingNote, quality);
-        if(notation.equals("min7") && r.nextInt(2) == 1){
+        if(notation.equals("-7") && r.nextInt(2) == 1){
             chord.b5();
         }
         if(difficulty >= 1 &&  (quality.getQualityName().equals("major") ||
