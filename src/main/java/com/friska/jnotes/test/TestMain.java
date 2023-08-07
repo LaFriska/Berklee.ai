@@ -1,7 +1,10 @@
 package com.friska.jnotes.test;
 
 import com.friska.jnotes.core.intervals.Interval;
+import com.friska.jnotes.core.intervals.IntervalCalculator;
 import com.friska.jnotes.core.intervals.IntervalQuality;
+import com.friska.jnotes.core.keys.Key;
+import com.friska.jnotes.core.keys.KeyQualities;
 import com.friska.jnotes.core.notes.Notes;
 import com.friska.jnotes.test.testutil.Test;
 
@@ -10,11 +13,11 @@ public class TestMain {
     public static final Test test = new Test();
 
     public static void main(String[] args) {
-        //System.out.println(new Key(Notes.F_DOUBLE_FLAT, KeyQualities.harmonicMinor()).getLilyCode());
+        System.out.println(new Key(Notes.E_DOUBLE_SHARP, KeyQualities.melodicMinor()).getLilyCode());
         //run();
 
-        Interval interval = new Interval(3, IntervalQuality.QUADRUPLE_AUGMENTED);
-        System.out.println(Notes.C.setOctave(1).getNoteAbove(interval));
+        //Interval interval = new Interval(3, IntervalQuality.QUADRUPLE_AUGMENTED);
+        //System.out.println(Notes.C.setOctave(1).getNoteAbove(interval));
     }
     private static void run(){
         NotesTest.comparison();

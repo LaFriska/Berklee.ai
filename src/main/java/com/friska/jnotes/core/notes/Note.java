@@ -270,6 +270,7 @@ public class Note implements ComparableElement<Note>, LilyCode {
      * parsed through the parameter will be found, and then used.
      * **/
     public Note getNoteAbove(Interval interval){
+        //System.out.println(this);
         if(this.isOctaveAbstract()) throw new IntervalException("Octave must not be abstract for this method to run.");
         int baseNoteVal = this.getBaseNoteLabel() + interval.getValue() - 1;
         Note newBaseNote = BaseNote.get(baseNoteVal);
@@ -284,16 +285,21 @@ public class Note implements ComparableElement<Note>, LilyCode {
         return newBaseNote.getAltered(diff);
     }
 
-    private int getDiff(Interval interval, Note newBaseNote){
-        int diff;
+    /*private int getDiff(Interval interval, Note newBaseNote){
+        int diff, compare;
         try {
-            int compare = new IntervalCalculator(this, newBaseNote).getDistance();
+            compare = new IntervalCalculator(this, newBaseNote).getDistance();
             diff = interval.getDistance() - compare;
         }catch (IntervalException e){
-            int compare = new IntervalCalculator(newBaseNote, this).getDistance();
+            compare = new IntervalCalculator(newBaseNote, this).getDistance();
             diff = compare - interval.getDistance();
         }
         return diff;
+    }*/
+
+    private int getDiff(Interval interval, Note newBaseNote){
+        int compare = newBaseNote.getSemitonesNumber() - this.getSemitonesNumber();
+        return interval.getDistance() - compare;
     }
 
     /**

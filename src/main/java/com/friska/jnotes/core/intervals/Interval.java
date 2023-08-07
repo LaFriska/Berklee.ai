@@ -144,4 +144,57 @@ public class Interval implements ComparableElement<Interval> {
     public boolean equalsEnharmonically(Interval interval) {
         return this.getDistance() == interval.getDistance();
     }
+
+    @MissingJavadoc
+    public Interval sum(Interval add){
+        int newVal = this.value + add.value - 1;
+        boolean p = isPerfectable(newVal);
+
+        int compare = new Interval(newVal, p ? IntervalQuality.PERFECT : IntervalQuality.MAJOR).getDistance();
+        int totalDistance = this.getDistance() + add.getDistance();
+
+        IntervalQuality newQual;
+
+        if(isPerfectable(newVal)){
+            switch (compare - totalDistance){
+                case -4 -> newQual = IntervalQuality.QUADRUPLE_AUGMENTED;
+                case -3 -> newQual = IntervalQuality.TRIPLE_AUGMENTED;
+                case -2 -> newQual = IntervalQuality.DOUBLE_AUGMENTED;
+                case -1 -> newQual = IntervalQuality.AUGMENTED;
+                case 0 -> newQual = IntervalQuality.PERFECT;
+                case 1 -> newQual = IntervalQuality.DIMINISHED;
+                case 2 -> newQual = IntervalQuality.DOUBLE_DIMINISHED;
+                case 3 -> newQual = IntervalQuality.TRIPLE_DIMINISHED;
+                case 4 -> newQual = IntervalQuality.QUADRUPLE_DIMINISHED;
+                default -> throw new IntervalException("Cannot find differential in summing interval. ");
+            }
+        }else{
+            switch (compare - totalDistance){
+                case -4 -> newQual = IntervalQuality.QUADRUPLE_AUGMENTED;
+                case -3 -> newQual = IntervalQuality.TRIPLE_AUGMENTED;
+                case -2 -> newQual = IntervalQuality.DOUBLE_AUGMENTED;
+                case -1 -> newQual = IntervalQuality.AUGMENTED;
+                case 0 -> newQual = IntervalQuality.MAJOR;
+                case 1 -> newQual = IntervalQuality.MINOR;
+                case 2 -> newQual = IntervalQuality.DIMINISHED;
+                case 3 -> newQual = IntervalQuality.DOUBLE_DIMINISHED;
+                case 4 -> newQual = IntervalQuality.TRIPLE_DIMINISHED;
+                case 5 -> newQual = IntervalQuality.QUADRUPLE_DIMINISHED;
+                default -> throw new IntervalException("Cannot find differential in summing interval. ");
+            }
+        }
+        return new Interval(newVal, newQual);
+    }
+
+    public boolean isPerfectable(){
+        return isPerfectable(IntervalCalculator.getModdedValue(value));
+    }
+
+    public static boolean isPerfectable(int val){
+        switch (IntervalCalculator.getModdedValue(val)){
+            case 0, 3, 4 -> {return true;}
+            case 1, 2, 5, 6 -> {return false;}
+            default -> throw new IntervalException("Cannot process interval value of " + val + ".");
+        }
+    }
 }

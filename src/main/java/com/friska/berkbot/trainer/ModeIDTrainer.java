@@ -24,7 +24,7 @@ public class ModeIDTrainer extends TrainerQuestion{
                 case 3 -> {return KeyQualities.melodicMinor();}
                 case 4 -> {return KeyQualities.dorian();}
             }
-        }else{
+        }else if(difficulty == 1){
             switch (r.nextInt(8)){
                 case 0 -> {return KeyQualities.major();}
                 case 1 -> {return KeyQualities.minor();}
@@ -35,8 +35,21 @@ public class ModeIDTrainer extends TrainerQuestion{
                 case 6 -> {return KeyQualities.mixolydian();}
                 case 7 -> {return KeyQualities.lydian();}
             }
+        }else {
+            switch (r.nextInt(10)){
+                case 0 -> {return KeyQualities.major();}
+                case 1 -> {return KeyQualities.minor();}
+                case 2 -> {return KeyQualities.harmonicMinor();}
+                case 3 -> {return KeyQualities.melodicMinor();}
+                case 4 -> {return KeyQualities.dorian();}
+                case 5 -> {return KeyQualities.phrygian();}
+                case 6 -> {return KeyQualities.mixolydian();}
+                case 7 -> {return KeyQualities.lydian();}
+                case 8 -> {return KeyQualities.altered();}
+                case 9 -> {return KeyQualities.diminished();}
+            }
         }
-        throw new RuntimeException();
+        throw new RuntimeException("Cannot get difficulty.");
     }
 
     @Override
